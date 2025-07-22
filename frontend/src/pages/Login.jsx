@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext";
 
 const Login = () => {
   const {setAccessToken,setUser,setIsLoggedIn}= useAppContext()

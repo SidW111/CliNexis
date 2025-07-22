@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 
 const TopDoctors = () => {
   const { doctor } = useAppContext();
+  const navigate= useNavigate();
+
 
   return (
-    <div className="px-20 py-6 ">
+    <div className="px-20 py-6  ">
       <div className="max-w-6xl mx-auto">
         {/* Top div  */}
         <div className="flex justify-between pb-16">
@@ -12,14 +15,14 @@ const TopDoctors = () => {
             Meet Our Featured <br /> Specialists
           </h1>
           <div className="flex items-center justify-center ">
-            <button className=" px-10 py-4 border border-black rounded-full">
+            <button onClick={() => navigate("/doctors")} className=" px-10 py-4 border border-black rounded-full">
               View All
             </button>
           </div>
         </div>
         {/* dOCTORS dIV */}
-        <div className="w-full grid grid-cols-4 gap-6 pt-5 gap-y-6 px-3 sm:px-0 pb-10">
-          {doctor.slice(1, 9).map((list) => (
+        <div className="w-full grid grid-cols-5 gap-6 pt-5 gap-y-6 px-3 sm:px-0 pb-10">
+          {doctor.slice(0, 11).map((list) => (
             <div
               className="bg-white border-blue-200 border-2 rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500"
               key={list.name}
@@ -47,6 +50,8 @@ const TopDoctors = () => {
           ))}
         </div>
       </div>
+    
+
     </div>
   );
 };
