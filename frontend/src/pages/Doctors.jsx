@@ -95,7 +95,7 @@ console.log(showFilter)
   }, [doctor, speciality])
 
   return (
-    <div className='w-full '>
+    <div className='w-full h-screen'>
 
     <div className='max-w-6xl mx-auto  '>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>

@@ -40,7 +40,7 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-blue-100 to-pink-50 border-b-4">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between  rounded-b-xl">
-        <div className="flex items-center space-x-2">
+        <div onClick={() => navigate("/")} className="flex items-center space-x-2 cursor-pointer">
           <FaMapMarkerAlt className="text-blue-600 text-4xl" />
           <div className="leading-tight">
             <h1 className="text-4xl font-semibold text-blue-600">
