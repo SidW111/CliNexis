@@ -19,9 +19,6 @@ export const AppProvider = ({ children }) => {
       console.log(error.message);
     }
   };
-  useEffect(() => {
-    getDoctors();
-  }, []);
   
   const getUserData = async () => {
     try {
@@ -45,25 +42,12 @@ export const AppProvider = ({ children }) => {
       setUserData(false);
     }
   }, [accessToken]);
-
-
+  
   useEffect(() => {
-    const refreshToken = async () => {
-      try {
-        const res = await axios.post("/user/refresh");
-        const token = res.data.accessToken
-        setAccessToken(token);
-        setIsLoggedIn(true);
-
-        console.log("✅ Token Refreshed");
-      } catch (error) {
-        console.log("User not logged in:", error.response?.data?.message);
-        setIsLoggedIn(false);
-      }
-    };
-
-    refreshToken();
+    getDoctors();
   }, []);
+
+
 
 
   const value = {

@@ -10,16 +10,17 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    
     if (state === "Sign Up") {
-      console.log("axios Instance", axios);
       try {
         const res = await axios.post("/user/signup", { name, email, password });
         if (res) {
           console.log("Sign Up SuccessFull");
+          toast.success("sign Up successfull")
         } else {
           toast.error(res.data.message);
         }
@@ -32,6 +33,7 @@ const Login = () => {
         if (res) {
           localStorage.setItem("token", res.data.accessToken);
           console.log("Sign In SuccessFull");
+          toast.done("sign In successfull")
           navigate('/')
           setAccessToken(res.data.accessToken)
           setUser(res.data.user)
@@ -104,7 +106,7 @@ const Login = () => {
               Already have an Account?&nbsp;{" "}
               <span
                 onClick={() => setState("Sign In")}
-                className="cursor-pointer hover:underline"
+                className="cursor-pointer text-blue-600 hover:underline"
               >
                 Click here
               </span>
@@ -114,7 +116,7 @@ const Login = () => {
               Don't have an Account?&nbsp;{" "}
               <span
                 onClick={() => setState("Sign Up")}
-                className="cursor-pointer hover:underline"
+                className="cursor-pointer text-blue-600 hover:underline"
               >
                 Click here
               </span>

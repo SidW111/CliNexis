@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useAppContext } from "../context/AppContext";
+import { getAccessTokenMemory, setAccessTokenMemory } from "../utils/auth";
 
-const { accessToken, setAccessToken } = useAppContext();
+
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -9,7 +10,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = accessToken;
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -29,7 +30,7 @@ axiosInstance.interceptors.response.use(
           { withCredentials: true }
         );
         const newAccessToken = res.data.accessToken;
-        setAccessToken(newAccessToken);
+        localStorage.setItem("token",newAccessToken);
         originalRequest.headers.Authorization === `Bearer ${newAccessToken}`
         return axiosInstance(originalRequest);
       } catch (error) {
