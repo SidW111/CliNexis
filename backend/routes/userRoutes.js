@@ -7,7 +7,7 @@ const userRouter = express.Router()
 //register & login routes
 userRouter.post("/signup",registerUser)
 userRouter.post("/signin",loginUser)
-userRouter.post("/refresh",newAccessToken,verifyUserRefreshToken)
+userRouter.get("/refresh",newAccessToken,verifyUserRefreshToken)
 
 //get & update userProfilee
 userRouter.get("/get-profile",verifyAccessToken,getProfile)

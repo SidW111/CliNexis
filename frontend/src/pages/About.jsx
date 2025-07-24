@@ -47,22 +47,22 @@ const About = () => {
           <div className="p-10 flex justify-center items-center">
             <p className="text-2xl font-semibold">WHY CHOOSE US</p>
           </div>
-          <div className="flex flex-row md:flex-row  border  mb-20">
-            <div className=" border px-10  md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-blue-500  hover:text-white transition-all duration-500 text-gray-600 cursor-pointer">
+          <div className=" flex flex-row md:flex-row  border  mb-20">
+            <div className=" border px-10  md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-gradient-to-r from-blue-100 to-pink-100  hover:text-black transition-all duration-500 text-gray-600 cursor-pointer">
               <b>EFFICIENCY</b>
               <p>
                 Streamlined appointment scheduling that fits into your busy
                 lifestyle.
               </p>
             </div>
-            <div className=" border px-10  md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-blue-500  hover:text-white transition-all duration-500 text-gray-600 cursor-pointer">
+            <div className=" border px-10  md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-gradient-to-r from-blue-100 to-pink-100  hover:text-black transition-all duration-500 text-gray-600 cursor-pointer">
               <b>CONVINIENCE</b>
               <p>
                 Access to a network of trusted healthcare professionals in your
                 area.
               </p>
             </div>
-            <div className=" border px-10  md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-blue-500  hover:text-white transition-all duration-500 text-gray-600 cursor-pointer">
+            <div className=" border px-10  md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-gradient-to-r from-blue-100 to-pink-100  hover:text-black transition-all duration-500 text-gray-600 cursor-pointer">
               <b>PERSONALIZATION</b>
               <p>
                 Tailored recommendations and reminders to help you stay on top

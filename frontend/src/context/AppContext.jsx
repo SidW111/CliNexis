@@ -7,6 +7,7 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [doctor, setDoctor] = useState([]);
+  const [userData, setUserData] = useState(false);
 
   const getDoctors = async () => {
     try {
@@ -18,10 +19,52 @@ export const AppProvider = ({ children }) => {
       console.log(error.message);
     }
   };
-
   useEffect(() => {
     getDoctors();
   }, []);
+  
+  const getUserData = async () => {
+    try {
+      const { data } = await axios.get("/user/get-profile", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (data) {
+        setUserData(data.user);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    if (accessToken) {
+      getUserData();
+      console.log(userData);
+    } else {
+      setUserData(false);
+    }
+  }, [accessToken]);
+
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        const res = await axios.post("/user/refresh");
+        const token = res.data.accessToken
+        setAccessToken(token);
+        setIsLoggedIn(true);
+
+        console.log("✅ Token Refreshed");
+      } catch (error) {
+        console.log("User not logged in:", error.response?.data?.message);
+        setIsLoggedIn(false);
+      }
+    };
+
+    refreshToken();
+  }, []);
+
 
   const value = {
     accessToken,
@@ -32,6 +75,8 @@ export const AppProvider = ({ children }) => {
     setIsLoggedIn,
     doctor,
     setDoctor,
+    userData,
+    setUserData,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

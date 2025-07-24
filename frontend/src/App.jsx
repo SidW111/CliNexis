@@ -8,6 +8,7 @@ import Doctors from "./pages/Doctors";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
@@ -19,10 +20,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/doctors" element={<Doctors />}></Route>
         <Route path="/doctors/:speciality" element={<Doctors />}></Route>
-        <Route path="/about" element={<About/>}></Route>
-        <Route path="/contact" element={<Contact/>}></Route>
+        <Route path="/about" element={<About />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/profile" element={<MyProfile/>}></Route>
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 }
