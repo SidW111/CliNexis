@@ -7,7 +7,8 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [doctor, setDoctor] = useState([]);
-  const [userData, setUserData] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [loading,setLoading] = useState(true)
 
   const getDoctors = async () => {
     try {
@@ -19,7 +20,7 @@ export const AppProvider = ({ children }) => {
       console.log(error.message);
     }
   };
-  
+
   const getUserData = async () => {
     try {
       const { data } = await axios.get("/user/get-profile", {
@@ -29,26 +30,35 @@ export const AppProvider = ({ children }) => {
       });
       if (data) {
         setUserData(data.user);
+        console.log("Fetched user:", data.user);
       }
     } catch (error) {
       console.log(error.message);
     }
   };
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token){
+      setAccessToken(token);
+      setIsLoggedIn(true)
+    }
+    setLoading(false);
+
+  }, [])
+
   useEffect(() => {
     if (accessToken) {
       getUserData();
-      console.log(userData);
     } else {
-      setUserData(false);
+      setUserData(null);
     }
   }, [accessToken]);
-  
+
   useEffect(() => {
     getDoctors();
   }, []);
-
-
-
 
   const value = {
     accessToken,
@@ -61,6 +71,8 @@ export const AppProvider = ({ children }) => {
     setDoctor,
     userData,
     setUserData,
+    loading,
+    setLoading,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

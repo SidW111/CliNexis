@@ -1,8 +1,4 @@
 import axios from "axios";
-import { useAppContext } from "../context/AppContext";
-import { getAccessTokenMemory, setAccessTokenMemory } from "../utils/auth";
-
-
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -24,18 +20,23 @@ axiosInstance.interceptors.response.use(
     if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const res = await axios.post(
-          "http://localhost:3000/api/user/refresh",
-          {},
-          { withCredentials: true }
-        );
+        const res = await axios.get("http://localhost:3000/api/user/refresh", {
+          withCredentials: true,
+        });
+        if (res) {
+          console.log("ok from axios instance:" + res);
+        }
         const newAccessToken = res.data.accessToken;
-        localStorage.setItem("token",newAccessToken);
-        originalRequest.headers.Authorization === `Bearer ${newAccessToken}`
+        localStorage.setItem("token", newAccessToken);
+        if (!originalRequest.headers) {
+          originalRequest.headers = {};
+        }
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (error) {
-        console.log(error.message  + "Refresh token failed");
-        window.location.href= "/login"
+        localStorage.removeItem("token");
+        console.log(error.message + "Refresh token failed");
+        window.location.href = "/login";
       }
     }
     return Promise.reject(error);

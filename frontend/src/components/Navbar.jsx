@@ -3,15 +3,16 @@ import { useAppContext } from "../context/AppContext.jsx";
 import {  useEffect, useRef, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 const Navbar = () => {
-  const { user, isLoggedIn, setIsLoggedIn, setUser, setAccessToken } =
+  const {userData, user, isLoggedIn, setIsLoggedIn, setUser, setAccessToken,loading } =
     useAppContext();
-  const [showDropdown, setShowDropdown] = useState(false);
 
-  const location = useLocation();
-  const currentPath = location.pathname;
-  const Links = [
-    { name: "HOME", path: "/" },
-    { name: "ALL DOCTORS", path: "/doctors" },
+    const [showDropdown, setShowDropdown] = useState(false);
+    
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const Links = [
+      { name: "HOME", path: "/" },
+      { name: "ALL DOCTORS", path: "/doctors" },
     { name: "ABOUT", path: "/about" },
     { name: "CONTACT US", path: "/contact" },
   ];
@@ -20,13 +21,13 @@ const Navbar = () => {
   const dropDownRef = useRef();
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     setUser(null);
     setAccessToken(null);
     navigate("/login");
   };
-
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
@@ -36,7 +37,8 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   });
-
+  
+  if (loading) return  null
   return (
     <nav className="bg-gradient-to-r from-blue-100 to-pink-50 border-b-4">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between  rounded-b-xl">
@@ -78,11 +80,11 @@ const Navbar = () => {
               onClick={() => setShowDropdown((prev) => !prev)}
             >
               <img
-                src={user.image}
+                src={userData?.image}
                 alt="profile pic"
                 className="w-10 h-10 rounded-full object-cover"
               />
-              <span className="text-sm font-medium">Welocme, {user.name}</span>
+              <span className="text-sm font-medium">Welocme, {userData?.name}</span>
             </div>
           ) : (
             <Link to="/login">
