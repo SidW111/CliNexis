@@ -22,18 +22,16 @@ export const AppProvider = ({ children }) => {
   };
 
   const getUserData = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.get("/user/get-profile", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const { data } = await axios.get("/user/get-profile");
       if (data) {
         setUserData(data.user);
         console.log("Fetched user:", data.user);
       }
     } catch (error) {
       console.log(error.message);
+      console.log("from get User Data")
     }
   };
 
@@ -48,13 +46,15 @@ export const AppProvider = ({ children }) => {
 
   }, [])
 
+  const token = localStorage.getItem('token');
   useEffect(() => {
-    if (accessToken) {
+    if (token) {
       getUserData();
+      console.log("rerfreshed")
     } else {
       setUserData(null);
     }
-  }, [accessToken]);
+  }, [token]);
 
   useEffect(() => {
     getDoctors();
@@ -73,6 +73,7 @@ export const AppProvider = ({ children }) => {
     setUserData,
     loading,
     setLoading,
+    getUserData,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

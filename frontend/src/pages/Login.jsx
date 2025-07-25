@@ -33,7 +33,7 @@ const Login = () => {
         if (res) {
           localStorage.setItem("token", res.data.accessToken);
           console.log("Sign In SuccessFull");
-          toast.done("sign In successfull")
+          toast.success("sign In successfull")
           navigate('/')
           setAccessToken(res.data.accessToken)
           setUser(res.data.user)

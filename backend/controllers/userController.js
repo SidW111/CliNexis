@@ -79,8 +79,8 @@ export const loginUser = async (req, res) => {
 
     res.cookie("refreshtoken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: false,
+      sameSite: "Lax",
       path: "api/auth/refresh",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -141,20 +141,18 @@ export const getProfile = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const userId = req.user;
-    const { name, dob, gender } = req.body;
+    const { dob, gender } = req.body;
     const imageFile = req.file;
 
-    if (!name && !imageFile && !gender && !dob) {
+    if ( !imageFile && !gender && !dob) {
       return res.status(400).json({
         message: "No fields provided to update",
       });
     }
 
     const updateData = {};
-    if (name) updateData.name = name;
     if (dob) updateData.dob = dob;
     if (gender) updateData.gender = gender;
-
     if (imageFile) {
       const imgFile = await cloudinary.uploader.upload(imageFile.path, {
         resource_type: "image",
@@ -164,7 +162,7 @@ export const updateUser = async (req, res) => {
 
     const updateUser = await userModel
       .findByIdAndUpdate(userId, updateData, { new: true, runValidators: true })
-      .select("-password");
+      .select("-password -name -email");
 
     res.json({
       message: "profile updated successfully",
