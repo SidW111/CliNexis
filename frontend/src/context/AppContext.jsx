@@ -8,7 +8,7 @@ export const AppProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [doctor, setDoctor] = useState([]);
   const [userData, setUserData] = useState(null);
-  const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const getDoctors = async () => {
     try {
@@ -22,7 +22,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const getUserData = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       const { data } = await axios.get("/user/get-profile");
       if (data) {
@@ -31,26 +31,24 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error.message);
-      console.log("from get User Data")
+      console.log("from get User Data");
     }
   };
 
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if(token){
+    const token = localStorage.getItem("token");
+    if (token) {
       setAccessToken(token);
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
     }
     setLoading(false);
+  }, []);
 
-  }, [])
-
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   useEffect(() => {
     if (token) {
       getUserData();
-      console.log("rerfreshed")
+      console.log("rerfreshed");
     } else {
       setUserData(null);
     }
