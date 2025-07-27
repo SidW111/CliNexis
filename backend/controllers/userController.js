@@ -245,7 +245,7 @@ export const getAppointments = async (req, res) => {
     console.log(userId);
     const appointments = await appointmentModel
       .find({ userId })
-      .populate("docId", "-password");
+      .populate("docId" ,"-password");
     if (!appointments) {
       res.json({ message: "problem fetching appointments" });
     }

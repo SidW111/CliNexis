@@ -109,9 +109,8 @@ const Appointment = () => {
         const appointment = await axios.post('/user/book-appointment',{docId,slotTime,slotDate})
         if(appointment.data.success){
                 toast.success("Appointment booked")
-                console.log(appointment.data)
                 getDoctors();
-                // navigate("/my-appointments")
+                navigate("/my-appointments")
         }else {
             toast.error(appointment.data.message)
         }
