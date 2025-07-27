@@ -27,7 +27,6 @@ axiosInstance.interceptors.response.use(
           console.log("ok from axios instance:" + res);
         }
         const newAccessToken = res.data.accessToken;
-        console.log(newAccessToken)
         localStorage.setItem("token", newAccessToken);
         if (!originalRequest.headers) {
           originalRequest.headers = {};

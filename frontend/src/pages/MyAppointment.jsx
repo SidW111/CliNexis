@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const MyAppointment = () => {
-  const { user } = useAppContext();
+  const { user,getDoctors} = useAppContext();
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
+  
   const months = [
     "",
     "Jan",
@@ -27,26 +28,41 @@ const MyAppointment = () => {
   const slotDateFormat = (slotDate) => {
     const dateArray = slotDate?.split("_");
     return (
-      dateArray[0]+ " " + months[Number(dateArray[1])] + " " + dateArray[2]
+      dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
     );
   };
 
-  const handlAppointment = async () => {
+  const getAppointment = async () => {
     try {
-      const res = await axios.get("/user/all-appointments", {
-        userId: user?._id,
-      });
+      const res = await axios.get("/user/all-appointments");
       if (res) {
-        setAppointments(res.data.appointments);
+        setAppointments(res.data.appointments.reverse());
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
   };
+
+  const cancelAppointment = async (appointmentId) => {
+    const res = await axios.post("/user/cancel-appointment", {appointmentId});
+    try {
+      if (res) {
+        toast.success("appointment cancelled");
+        getDoctors();
+        getAppointment()
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
-    handlAppointment();
+    getAppointment();
   }, []);
+
   return (
     <div className="">
       <div className="max-w-5xl h-screen mx-auto">
@@ -84,8 +100,40 @@ const MyAppointment = () => {
                     </p>
                   </div>
 
-                  <div className="font-semibold mt-1">Date: {slotDateFormat(item.slotDate)}</div>
-                  <div className="font-semibold mt-1">Time: {item.slotTime}</div>
+                  <div className="font-semibold mt-1">
+                    Date: {slotDateFormat(item.slotDate)}
+                  </div>
+                  <div className="font-semibold mt-1">
+                    Time: {item.slotTime}
+                  </div>
+                </div>
+                <div></div>
+                <div className="flex flex-col gap-2 justify-center">
+                  {!item.cancelled && item.payment && !item.isCompleted && (
+                    <button className="sm:min-w-48 py-2 border rounded text-stone-500 bg-indigo-100">
+                      Paid
+                    </button>
+                  )}
+                  {!item.cancelled && !item.payment && !item.isCompleted && (
+                    <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-blue-500 hover:text-white transition-all duration-300">
+                      Pay Online
+                    </button>
+                  )}
+                  {!item.cancelled && !item.isCompleted && (
+                    <button onClick={() => cancelAppointment(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-600 hover:text-white transition-all duration-300">
+                      Cancel Appointment
+                    </button>
+                  )}
+                  {item.cancelled && !item.isCompleted && (
+                    <button className="sm:min-w-48 py-2 border border-red-600 rounded text-red-600">
+                      Appointment Cancelled
+                    </button>
+                  )}
+                  {item.isCompleted && (
+                    <button className="sm:min-w-48 py-2 border border-green-600 text-green-600">
+                      Completed
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
