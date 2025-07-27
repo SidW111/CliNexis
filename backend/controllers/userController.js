@@ -6,7 +6,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { userModel } from "../models/userModel.js";
 import { doctorModel } from "../models/doctorModel.js";
 import { appointmentModel } from "../models/appointmentModel.js";
-
+import Razorpay from "razorpay";
 dotenv.config();
 
 export const registerUser = async (req, res) => {
@@ -195,7 +195,7 @@ export const bookAppointment = async (req, res) => {
     if (!slots_booked[slotDate]) slots_booked[slotDate] = [];
     slots_booked[slotDate].push(slotTime);
 
-    const userData = await userModel.findById(userId).select('-password');
+    const userData = await userModel.findById(userId).select("-password");
     if (!userData) return res.json({ message: "user not found" });
 
     const {
@@ -218,15 +218,15 @@ export const bookAppointment = async (req, res) => {
     const docSlot = await doctorModel.findByIdAndUpdate(docId, {
       slots_booked,
     });
-    if(!docSlot){
-      return res.status(400).json({message:"slot not available",error:'slot not available'}) 
+    if (!docSlot) {
+      return res
+        .status(400)
+        .json({ message: "slot not available", error: "slot not available" });
     }
-    const newAppointment = await  appointmentModel.create(appointmentData);
-    
-      
-    
+    const newAppointment = await appointmentModel.create(appointmentData);
+
     res.json({
-      success:true,
+      success: true,
       message: "appointment booked successfully",
       appoointment: newAppointment,
     });
@@ -245,7 +245,7 @@ export const getAppointments = async (req, res) => {
     console.log(userId);
     const appointments = await appointmentModel
       .find({ userId })
-      .populate("docId" ,"-password");
+      .populate("docId", "-password");
     if (!appointments) {
       res.json({ message: "problem fetching appointments" });
     }
@@ -304,3 +304,29 @@ export const cancelAppointment = async (req, res) => {
     });
   }
 };
+
+const RazporpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+export const paymentrazorpay =async(req,res) =>{
+
+  const {appointmentId} = req.user;
+
+  const appointment = await appointmentModel.findById(appointmentId)
+
+  if(!appointment){
+   return res.status(500).json({
+    message:"no appointment found",
+    success:false
+   })
+  }
+
+  if(appointment.cancelled){
+    return res.json({message:"appointment already cancelled"})
+  }
+
+  
+
+}

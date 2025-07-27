@@ -40,11 +40,19 @@ const Appointment = () => {
   const getAvailableSlots = async () => {
     setDocSlots([]);
 
+    const now = Date.now()
     let today = new Date();
+    const cutOffTime = new Date()
+    cutOffTime.setHours(22,30,0,0);
     
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
         let currentDate = new Date(today);
         currentDate.setDate(today.getDate() + i);
+
+        const isToday = i ===0;
+        if( isToday && now > cutOffTime){
+          continue;
+        }
         
         let endTime = new Date();
         endTime.setDate(today.getDate() + i);
@@ -91,8 +99,10 @@ const Appointment = () => {
         }
 
         currentDate.setMinutes(currentDate.getMinutes() + 30);
+      
       }
-      setDocSlots((prev) => [...prev, timeSlots]);
+      if(timeSlots.length > 0){
+      setDocSlots((prev) => [...prev, timeSlots]);}
     }
   };
 
