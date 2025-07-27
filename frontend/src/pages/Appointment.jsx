@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "../services/axiosInstance";
 import { toast } from "react-toastify";
+import { RelatedDoc } from "../components/RelatedDoc";
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -220,6 +221,7 @@ const Appointment = () => {
         </div>
 
       </div>
+      <RelatedDoc docId={docId} speciality={docInfo?.speciality}  />
     </div>
   );
 };
