@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
-    if (error?.response?.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const res = await axios.get("http://localhost:3000/api/user/refresh", {

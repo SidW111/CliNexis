@@ -4,7 +4,8 @@ dotenv.config();
 
 export const verifyAccessToken = (req, res, next) => {
 
-  const token = req.headers.authorization.split(" ")[1];
+  // const token = req.headers.authorization.split(" ")[1];
+  const token = req.headers.authorization?.split(" ")[1];
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decodedToken.userId;

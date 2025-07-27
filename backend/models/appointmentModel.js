@@ -21,6 +21,6 @@ export const appointmentSchema = new mongoose.Schema({
     payment:{type:Boolean,default:false},
     isCompleted:{type:Boolean,default:false},
     createdAt:{type:Date,default:Date.now}
-})
+},{minimize:false})
 
 export const appointmentModel = mongoose.model("appointment",appointmentSchema);

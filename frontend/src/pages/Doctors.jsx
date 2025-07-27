@@ -89,9 +89,6 @@ const Doctors = () => {
 
   useEffect(() => {
     applyFilter()
-console.log(doctor);
-console.log(filterDoc);
-console.log(showFilter)
   }, [doctor, speciality])
 
   return (
@@ -133,7 +130,7 @@ console.log(showFilter)
         </div>
       </div>
     </div>
-            </div>
+  </div>
   )
 }
 

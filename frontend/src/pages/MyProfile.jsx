@@ -4,7 +4,7 @@ import axios from "../services/axiosInstance";
 import {toast} from "react-toastify"
 
 const MyProfile = () => {
-  const { userData, setUserData ,getUserData} = useAppContext();
+  const { userData ,getUserData} = useAppContext();
   const [isEdit, setIsEdit] = useState(false);
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");

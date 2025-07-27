@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyProfile from "./pages/MyProfile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Appointment from "./pages/Appointment";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/profile" element={<MyProfile/>}></Route>
+        <Route path="/appointment/:docId" element={<Appointment/>}></Route>
       </Routes>
         <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
       <Footer />

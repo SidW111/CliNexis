@@ -91,7 +91,7 @@ export const loginUser = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        image:user.image
+        image: user.image,
       },
     });
   } catch (error) {
@@ -100,7 +100,6 @@ export const loginUser = async (req, res) => {
 };
 
 export const newAccessToken = (req, res) => {
-
   try {
     const newAccessToken = jwt.sign(
       { userId: req.user },
@@ -118,7 +117,7 @@ export const newAccessToken = (req, res) => {
 
 export const getProfile = async (req, res) => {
   try {
-    console.log(req.user)
+    console.log(req.user);
     const user = await userModel.findById(req.user).select("-password");
 
     if (!user) {
@@ -144,7 +143,7 @@ export const updateUser = async (req, res) => {
     const { dob, gender } = req.body;
     const imageFile = req.file;
 
-    if ( !imageFile && !gender && !dob) {
+    if (!imageFile && !gender && !dob) {
       return res.status(400).json({
         message: "No fields provided to update",
       });
@@ -196,7 +195,7 @@ export const bookAppointment = async (req, res) => {
     if (!slots_booked[slotDate]) slots_booked[slotDate] = [];
     slots_booked[slotDate].push(slotTime);
 
-    const userData = await userModel.findById(userId);
+    const userData = await userModel.findById(userId).select('-password');
     if (!userData) return res.json({ message: "user not found" });
 
     const {
@@ -216,11 +215,18 @@ export const bookAppointment = async (req, res) => {
       Date: Date.now(),
     };
 
-    const newAppointment = await appointmentModel.create(appointmentData);
-
-    await doctorModel.findByIdAndUpdate(docId, { slots_booked });
-
+    const docSlot = await doctorModel.findByIdAndUpdate(docId, {
+      slots_booked,
+    });
+    if(!docSlot){
+      return res.status(400).json({message:"slot not available",error:'slot not available'}) 
+    }
+    const newAppointment = await  appointmentModel.create(appointmentData);
+    
+      
+    
     res.json({
+      success:true,
       message: "appointment booked successfully",
       appoointment: newAppointment,
     });
@@ -236,9 +242,13 @@ export const bookAppointment = async (req, res) => {
 export const getAppointments = async (req, res) => {
   try {
     const userId = req.user;
-    console.log(userId)
-    const appointments = await appointmentModel.find({userId}).populate("docId", "-password");
-    if(!appointments){res.json({message:"problem fetching appointments"})}
+    console.log(userId);
+    const appointments = await appointmentModel
+      .find({ userId })
+      .populate("docId", "-password");
+    if (!appointments) {
+      res.json({ message: "problem fetching appointments" });
+    }
     return res.status(200).json({
       message: "appointments fetched suuccessfully",
       appointments,
@@ -274,7 +284,7 @@ export const cancelAppointment = async (req, res) => {
     const doc = await doctorModel.findById(appointment.docId);
     let slots_booked = doc.slots_booked;
     let slotDate = appointment.slotDate;
-    let slotTime = appointment.slotTime
+    let slotTime = appointment.slotTime;
     if (slots_booked[slotDate]) {
       doc.slots_booked[slotDate] = doc.slots_booked[slotDate].filter(
         (slot) => slot !== slotTime
@@ -283,7 +293,10 @@ export const cancelAppointment = async (req, res) => {
 
     await doctorModel.findByIdAndUpdate(appointment.docId, { slots_booked });
 
-    return res.json({ message: "Appointment Cancelled successfully",appointment });
+    return res.json({
+      message: "Appointment Cancelled successfully",
+      appointment,
+    });
   } catch (error) {
     res.json({
       error: error.message,

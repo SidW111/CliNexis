@@ -10,6 +10,8 @@ export const AppProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const currencySymbol = "$";
+
   const getDoctors = async () => {
     try {
       const { data } = await axios.get(`/doctor/get-doctor`);
@@ -48,7 +50,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       getUserData();
-      console.log("rerfreshed");
+      console.log("refreshed");
     } else {
       setUserData(null);
     }
@@ -72,6 +74,8 @@ export const AppProvider = ({ children }) => {
     loading,
     setLoading,
     getUserData,
+    currencySymbol,
+    getDoctors
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
