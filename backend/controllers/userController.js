@@ -310,23 +310,84 @@ const RazporpayInstance = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-export const paymentrazorpay =async(req,res) =>{
+export const paymentrazorpay = async (req, res) => {
+  try {
+    console.log("razorpay instance started....");
+    console.log("request body: " + req.user);
+    const { appointmentId } = req.user;
 
-  const {appointmentId} = req.user;
+    if (!appointmentId) {
+      return res.status(500).json({
+        message: " appointment ID missing",
+        success: false,
+      });
+    }
 
-  const appointment = await appointmentModel.findById(appointmentId)
+    console.log("Fetching appointment data for id:" + appointmentId);
 
-  if(!appointment){
-   return res.status(500).json({
-    message:"no appointment found",
-    success:false
-   })
+    const appointmentData = await appointmentModel.findById(appointmentId);
+
+    if (!appointmentData) {
+      console.error("Error: Appointment data not found for ID:", appointmentId);
+      return res
+        .status(404)
+        .json({ success: false, message: "Appointment not found" });
+    }
+
+    console.log("appointment data fetched :" + appointmentData);
+    if (appointmentData.cancelled) {
+      console.error(
+        "Error: Appointment is already cancelled for ID:",
+        appointmentId
+      );
+      return res
+        .status(400)
+        .json({ success: false, message: "Appointment is cancelled" });
+    }
+
+    // razorpay
+
+    const options = {
+      amount: appointmentData.amount * 100,
+      currency: "INR",
+      reciept: appointmentId.toString(),
+    };
+
+    console.log("razorpay options" + options);
+
+    const order = await RazporpayInstance.orders.create(options);
+
+    console.log("razorpay options created succesfully");
+
+    res.status(200).json({
+      success: true,
+      message: "order created successfully",
+      order,
+    });
+  } catch (error) {
+    console.log(RazorpayError.message);
+    res.status(500).json({
+      success: false,
+      message: "razorpay error",
+    });
   }
+};
 
-  if(appointment.cancelled){
-    return res.json({message:"appointment already cancelled"})
+export const verifyRazorpay = async (req, res) => {
+  try {
+    const { Razorpay_order_id } = req.body;
+    const orderInfo = await RazporpayInstance.orders.fetch(Razorpay_order_id);
+
+    if (orderInfo.status === "paid") {
+      await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {
+        payment: true,
+      });
+      res.json({ success: true, message: "payment successful" });
+    } else {
+      res.json({ success: false, message: "Payment failed" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
-
-  
-
-}
+};
