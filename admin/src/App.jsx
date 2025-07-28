@@ -1,10 +1,16 @@
-import React from 'react'
+import {BrowserRouter,Route,Routes} from "react-router-dom"
+import Login from "./pages/Login"
+import {ToastContainer} from "react-toastify"
 
 const App = () => {
   return (
-    <div className='flex justify-center text-8xl hover:scale-105 transition-all duration-500'>
-      <h1>Hello SId first trye</h1>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login/>}></Route>
+
+    </Routes>
+    <ToastContainer/>
+    </BrowserRouter>
   )
 }
 

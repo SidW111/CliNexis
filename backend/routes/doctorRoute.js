@@ -6,7 +6,7 @@ const doctorRouter = express.Router();
 
 //to login as doctor
 doctorRouter.post("/login",doctorLogin);
-doctorRouter.post("/refresh",verifyDoctorRefreshToken,newDoctorAccessToken);
+doctorRouter.get("/refresh",verifyDoctorRefreshToken,newDoctorAccessToken);
 
 //api to change availability
 doctorRouter.post("/change-availability",verifyDoctorAccessToken,changeAvailability)
