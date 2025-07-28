@@ -43,7 +43,7 @@ userRouter.get("/all-appointments", verifyAccessToken, getAppointments);
 userRouter.post("/cancel-appointment", verifyAccessToken, cancelAppointment);
 //payments
 
-userRouter.post("/payment-Razorpay", verifyAccessToken, paymentrazorpay);
-userRouter.post("/verify-Razorpay", verifyAccessToken, verifyRazorpay);
+userRouter.post("/payment-razorpay", verifyAccessToken, paymentrazorpay);
+userRouter.post("/verify-razorpay", verifyAccessToken, verifyRazorpay);
 
 export default userRouter;
