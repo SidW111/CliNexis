@@ -313,8 +313,8 @@ const RazporpayInstance = new Razorpay({
 export const paymentrazorpay = async (req, res) => {
   try {
     console.log("razorpay instance started....");
-    console.log("request body: " + req.user);
-    const { appointmentId } = req.user;
+    console.log("request body: " + req.body);
+    const { appointmentId } = req.body;
 
     if (!appointmentId) {
       return res.status(500).json({
@@ -350,14 +350,15 @@ export const paymentrazorpay = async (req, res) => {
     const options = {
       amount: appointmentData.amount * 100,
       currency: "INR",
-      reciept: appointmentId.toString(),
+      
+      receipt: appointmentId.toString(),
     };
 
     console.log("razorpay options" + options);
 
     const order = await RazporpayInstance.orders.create(options);
 
-    console.log("razorpay options created succesfully");
+    console.log("razorpay options created succesfully"+ order);
 
     res.status(200).json({
       success: true,
@@ -365,7 +366,7 @@ export const paymentrazorpay = async (req, res) => {
       order,
     });
   } catch (error) {
-    console.log(RazorpayError.message);
+    console.log(error);
     res.status(500).json({
       success: false,
       message: "razorpay error",
@@ -375,8 +376,8 @@ export const paymentrazorpay = async (req, res) => {
 
 export const verifyRazorpay = async (req, res) => {
   try {
-    const { Razorpay_order_id } = req.body;
-    const orderInfo = await RazporpayInstance.orders.fetch(Razorpay_order_id);
+    const { razorpay_order_id } = req.body.response;
+    const orderInfo = await RazporpayInstance.orders.fetch(razorpay_order_id);
 
     if (orderInfo.status === "paid") {
       await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {

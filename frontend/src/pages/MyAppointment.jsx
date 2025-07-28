@@ -59,25 +59,36 @@ const MyAppointment = () => {
     }
   };
 
-  const payment = async (appointmentId) => {
+  const payment = async (order) => {
+    console.log(order.id);
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: order.currency,
       name: "Appointment payment",
       description: "Appointment payment",
-      order_id: order.id,
-      reciept: order.reciept,
+      order_id: order?.id,
+      receipt: order.receipt,
+
+      prefill: {
+        name: user?.name || "patient",
+        email: user?.email || " ",
+        contact: user?.contact || " ",
+      },
+      theme: {
+        color: "#0f172a",
+      },
+
       handler: async (response) => {
         console.log(response);
         try {
           const res = await axios.post("/user/verify-razorpay", {
-            appointmentId,
+            response,
           });
 
           if (res.data.success) {
             getAppointment();
-            toast.message("payment successful");
+            toast.success("payment successful");
             console.log("payment successful");
             navigate("/my-appointments");
           } else {
@@ -90,24 +101,27 @@ const MyAppointment = () => {
       },
     };
 
-    const rzp = new window.Razorpay(options)
+    const rzp = new window.Razorpay(options);
     rzp.open();
   };
 
-  const appointmentRazorpay = async(appointmentId) => {
-try {
-  const {data} = await axios.post('/user/payment-razorpay',{appointmentId})
+  const appointmentRazorpay = async (appointmentId) => {
+    try {
+      const { data } = await axios.post("/user/payment-razorpay", {
+        appointmentId,
+      });
 
-  if(data.success){
-    payment(data.order)
-  }else{
-    toast.error(data.message)
-  }
-} catch (error) {
-  console.log(error.message);
-  toast.error(error.message)
-}
-  }
+      if (data.success) {
+        payment(data.order);
+        console.log(data.order);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  };
 
   useEffect(() => {
     getAppointment();
@@ -165,7 +179,10 @@ try {
                     </button>
                   )}
                   {!item.cancelled && !item.payment && !item.isCompleted && (
-                    <button onClick={() => appointmentRazorpay(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-blue-500 hover:text-white transition-all duration-300">
+                    <button
+                      onClick={() => appointmentRazorpay(item._id)}
+                      className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-blue-500 hover:text-white transition-all duration-300"
+                    >
                       Pay Online
                     </button>
                   )}
