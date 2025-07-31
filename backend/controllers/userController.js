@@ -346,7 +346,6 @@ export const paymentrazorpay = async (req, res) => {
     }
 
     // razorpay
-
     const options = {
       amount: appointmentData.amount * 100,
       currency: "INR",
