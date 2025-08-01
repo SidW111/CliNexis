@@ -33,7 +33,6 @@ const Login = () => {
           const token = data.accessToken;
           localStorage.setItem("token", token);
           localStorage.removeItem("AToken");
-
           toast.success("Doctor logged in successfully");
           navigate("/doctor/dashboard");
         }

@@ -1,21 +1,11 @@
-const DocDashboard =( )=>{ 
-return <div className="w-full h-screen">
+import { FaMapMarkerAlt } from "react-icons/fa";
+
+const DocDashboard = () => {
+  return (
     <div>
-
-    <div className="w-full h-[10vh]  bg-red-100">
-        <img src="" alt="" />
-        <button>Logout</button>
+        
     </div>
-    <div>
-        <div>
+  );
+};
 
-        </div>
-        <div>
-
-        </div>
-    </div>
-    </div>
-</div>
-}
-
-export default DocDashboard
+export default DocDashboard;
