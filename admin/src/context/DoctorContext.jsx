@@ -1,18 +1,20 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, useState } from "react";
 
-const DoctorContext = createContext();
+const doctorContext = createContext();
 
-export const DoctorProvider = ({children}) => {
-    const value = {
-
-    }
-return (
-    <DoctorContext.Provider value={value}>
+export const DoctorProvider = ({ children }) => {
+  const [ dToken, setDToken ] = useState(null);
+  const value = {
+    dToken,
+    setDToken,
+  };
+  return (
+    <doctorContext.Provider value={value}>
         {children}
-    </DoctorContext.Provider>
-)
-}
+        </doctorContext.Provider>
+  );
+};
 
 export const useDoctorContext = () => {
-    useContext(DoctorContext);
-}
+  return useContext(doctorContext);
+};

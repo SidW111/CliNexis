@@ -2,12 +2,19 @@ import { useState } from "react";
 import axios from "../services/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDoctorContext } from "../context/DoctorContext";
+import { useAdminContext } from "../context/AdminContext";
 const Login = () => {
   const [state, setState] = useState("Doctor");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const {setDToken} = useDoctorContext();
+  const {setAToken} = useAdminContext();
+
   const navigate = useNavigate();
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (state === "Admin") {
@@ -17,6 +24,7 @@ const Login = () => {
           console.log("admin logged in successfully");
           const AToken = data.token;
           localStorage.setItem("AToken", AToken);
+          setAToken(AToken)
           localStorage.removeItem("token");
           toast.success("Admin logged in successfully");
           navigate("/admin/dashboard");
@@ -32,6 +40,7 @@ const Login = () => {
           console.log("doctor logged in successfully");
           const token = data.accessToken;
           localStorage.setItem("token", token);
+          setDToken(token);
           localStorage.removeItem("AToken");
           toast.success("Doctor logged in successfully");
           navigate("/doctor/dashboard");

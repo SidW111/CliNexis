@@ -1,11 +1,22 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { useAdminContext } from "../context/AdminContext";
+import { useDoctorContext } from "../context/DoctorContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+    const {setAToken} = useAdminContext();
+    const { setDToken} = useDoctorContext(); 
+    const navigate = useNavigate();
     const handleLogout = () => {
+        navigate('/')
         localStorage.removeItem("token")
+        setDToken("")
+        localStorage.removeItem("AToken")
+        setAToken("")
     }
   return (
-    <div className="w-full h-screen">
+    <div className="w-full ">
       <div className="flex justify-between w-full pl-10 pr-10 p-4 border border-b-2 ">
         <div className="flex items-center gap-1">
           <FaMapMarkerAlt className="text-blue-600 text-4xl" />
