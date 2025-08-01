@@ -7,7 +7,6 @@ const App = () => {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login/>}></Route>
-
     </Routes>
     <ToastContainer/>
     </BrowserRouter>
