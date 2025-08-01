@@ -17,9 +17,8 @@ import MyAppointment from "./pages/MyAppointment";
 function App() {
   return (
     <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Navbar/>}/> 
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/doctors" element={<Doctors />}></Route>
@@ -29,10 +28,10 @@ function App() {
         <Route path="/profile" element={<MyProfile/>}></Route>
         <Route path="/appointment/:docId" element={<Appointment/>}></Route>
         <Route path="/my-appointments" element={<MyAppointment/>}></Route>
-        <Route path="/" element={<Footer/>}></Route>
+        
       </Routes>
         <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
-      {/* <Footer /> */}
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -47,7 +47,7 @@ const Login = () => {
     }
   }
   return (
-    <div className=" h-screen flex flex-col justify-center items-center ">
+    <div className=" h-[90vh] flex flex-col justify-center items-center ">
       <form className=" border shadow-lg bg-white p-6 rounded-xl w-[90%] max-w-md">
         <h2 className="text-3xl text-blue-500  flex justify-center items-center mb-4 font-bold">
           {state === "Sign Up" ? "Sign Up" : "Sign In"}

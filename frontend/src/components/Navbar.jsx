@@ -24,7 +24,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     setUser(null);
-    setAccessToken(null);
+    setAccessToken(false);
     navigate("/login");
   };
   
@@ -89,7 +89,7 @@ const Navbar = () => {
           ) : (
             <Link to="/login">
               <button className="bg-white px-6 py-3 rounded-full font-medium text-gray-800 shadow-lg hover:bg-gray-100 transition">
-                Sign In
+                Sign Up
               </button>
             </Link>
           )}

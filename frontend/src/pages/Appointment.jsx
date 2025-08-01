@@ -126,7 +126,7 @@ const Appointment = () => {
         }
     } catch (error) {
         console.log(error);
-        toast.error(error.message)
+        toast.error("Sign Up to book appointment")
     }
   }
 
