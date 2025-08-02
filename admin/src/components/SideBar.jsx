@@ -5,9 +5,12 @@ import { RiCalendarScheduleLine } from "react-icons/ri";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import { PiUserList } from "react-icons/pi";
 import { useEffect } from "react";
+import { useDoctorContext } from "../context/DoctorContext";
+import { CgProfile } from "react-icons/cg";
 
 const SideBar = () => {
   const { aToken } = useAdminContext();
+  const {dToken} = useDoctorContext();
 
   return (
     <div className="min-h-screen bg-white border-r">
@@ -59,6 +62,43 @@ const SideBar = () => {
           </NavLink>
         </ul>
       )}
+
+      {dToken && <ul className="text-[#515151] mt-5 ">
+          <NavLink
+            className={({ isActive }) =>
+              `font-medium flex gap-3 md:px-9 items-center px-3 py-3.5 min-w-72 ${
+                isActive ? "bg-blue-50 border-r-4 border-blue-500 " : " "
+              }`
+            }
+            to={"/admin-dashboard"}
+          >
+            <RxDashboard size={22} />
+            <p className="hidden md:block">Dashboard</p>
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+                isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
+              }`
+            }
+            to={"/appointments"}
+          >
+            <RiCalendarScheduleLine size={22}/>
+            <p className="md:block hidden">Appointment</p>
+          </NavLink>
+          
+          <NavLink
+            className={({ isActive }) =>
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+                isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
+              }`
+            }
+            to={"/doctors-list"}
+          >
+            <CgProfile  size={22}/>
+            <p className="md:block hidden">Doctors Profile</p>
+          </NavLink>
+        </ul>}
     </div>
   );
 };
