@@ -66,8 +66,13 @@ export const AdminProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getDashData();
+    if(aToken){
+      getDashData();
+      getAllAppointments();
+    }
   }, [aToken]);
+
+  
 
   const value = {
     aToken,
