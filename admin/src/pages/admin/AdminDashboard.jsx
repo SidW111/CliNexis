@@ -1,8 +1,8 @@
 import { useAdminContext } from "../../context/AdminContext"
 
 const AdminDashboard = () => {
-   const {dashData} = useAdminContext();
-   console.log("dashData :",JSON.stringify(dashData,null,2))
+   const {dashData,cancelAppointment,appointment} = useAdminContext();
+   console.log("dashData :",dashData)
  return <div>
     HII FROM ADMIN DASHBOARdD
  </div>

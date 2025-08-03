@@ -8,6 +8,7 @@ export const AdminProvider = ({ children }) => {
   );
 
   const [dashData, setDashData] = useState(false);
+  const [appointment,setAppointments] = useState([])
 
   const getDashData = async () => {
     try {
@@ -21,8 +22,41 @@ export const AdminProvider = ({ children }) => {
       );
 
       if (data.success) {
-        setDashData(data);
+        setDashData(data.dashboard);
       }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getAllAppointments = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:3000/api/admin/allappointment",
+        {
+          headers: {
+            Authorization: `Bearer ${aToken}`,
+          },
+        }
+      );
+      setAppointments(data.appointments)
+    } catch (error) {
+      console.log(error.message)
+    }
+  };
+
+  const cancelAppointment = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/api/admin/cancel-appointment",
+        {
+          headers: {
+            Authorization: `Bearer ${aToken}`,
+          },
+        },
+        { appointmentId }
+      );
+      getAllAppointments();
     } catch (error) {
       console.log(error.message);
     }
@@ -37,6 +71,8 @@ export const AdminProvider = ({ children }) => {
     setAToken,
     getDashData,
     dashData,
+    cancelAppointment,
+    appointment,
   };
 
   return (
