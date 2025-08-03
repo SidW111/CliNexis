@@ -5,15 +5,18 @@ import App from "./App.jsx";
 import { AppProvider } from "./context/AppContext.jsx";
 import { DoctorProvider } from "./context/DoctorContext.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AdminProvider>
-      <DoctorProvider>
-        <AppProvider>
-          <App />
-        </AppProvider>
-      </DoctorProvider>
-    </AdminProvider>
+    <BrowserRouter>
+      <AdminProvider>
+        <DoctorProvider>
+          <AppProvider>
+            <App />
+          </AppProvider>
+        </DoctorProvider>
+      </AdminProvider>
+    </BrowserRouter>
   </StrictMode>
 );

@@ -18,7 +18,7 @@ const SideBar = () => {
         <ul className="text-[#515151] mt-5 ">
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex gap-3 md:px-9 items-center px-3 py-3.5 min-w-72 ${
+              `font-medium flex gap-3 md:px-9 items-center px-3 py-3.5 md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500 " : " "
               }`
             }
@@ -29,7 +29,7 @@ const SideBar = () => {
           </NavLink>
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
@@ -40,7 +40,7 @@ const SideBar = () => {
           </NavLink>
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
@@ -51,7 +51,7 @@ const SideBar = () => {
           </NavLink>
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
@@ -66,7 +66,7 @@ const SideBar = () => {
       {dToken && <ul className="text-[#515151] mt-5 ">
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex gap-3 md:px-9 items-center px-3 py-3.5 min-w-72 ${
+              `font-medium flex gap-3 md:px-9 items-center px-3 py-3.5 md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500 " : " "
               }`
             }
@@ -77,7 +77,7 @@ const SideBar = () => {
           </NavLink>
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5  md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
@@ -89,7 +89,7 @@ const SideBar = () => {
           
           <NavLink
             className={({ isActive }) =>
-              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 min-w-72 ${
+              `font-medium flex items-center gap-3 md:px-9 px-3 py-3.5 md:min-w-72 ${
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }

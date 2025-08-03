@@ -221,7 +221,7 @@ export const bookAppointment = async (req, res) => {
     if (!docSlot) {
       return res
         .status(400)
-        .json({ message: "slot not available", error: "slot not available" });
+        .json({ message:"slot not available", error: "slot not available" });
     }
     const newAppointment = await appointmentModel.create(appointmentData);
 

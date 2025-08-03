@@ -5,20 +5,31 @@ import DocDashboard from "./pages/doctor/DocDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Navbar from "./components/NavBar";
 import SideBar from "./components/SideBar";
+import { useAdminContext } from "./context/AdminContext";
+import { useDoctorContext } from "./context/DoctorContext";
 
 const App = () => {
-  return (
-    <BrowserRouter>
-    <Navbar/>
-    <SideBar/>
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="doctor-dashboard" element={<DocDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      </Routes>
+  const {aToken} = useAdminContext()
+  const {token} = useDoctorContext()
+  return aToken || token ? (  
+    <div className="bg-[#F8F9FD]">
       <ToastContainer />
-    </BrowserRouter>
-  );
+      <Navbar />
+      <div className="flex items-start">
+        <SideBar />
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/doctor-dashboard" element={<DocDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        </Routes>
+      </div>
+    </div>
+  ) : (
+    <>
+    <Login />
+    <ToastContainer/>
+    </>
+  )
 };
 
 export default App;
