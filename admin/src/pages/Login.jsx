@@ -22,12 +22,12 @@ const Login = () => {
         const { data } = await axios.post("/admin/login", { email, password });
         if (data) {
           console.log("admin logged in successfully");
-          const AToken = data.token;
-          localStorage.setItem("AToken", AToken);
-          setAToken(AToken)
+          const aToken = data.token;
+          localStorage.setItem("aToken", aToken);
+          setAToken(aToken)
           localStorage.removeItem("token");
           toast.success("Admin logged in successfully");
-          navigate("/admin/dashboard");
+          navigate("/admin-dashboard");
         }
       } catch (error) {
         console.log(error);
@@ -41,7 +41,7 @@ const Login = () => {
           const token = data.accessToken;
           localStorage.setItem("token", token);
           setDToken(token);
-          localStorage.removeItem("AToken");
+          localStorage.removeItem("aToken");
           toast.success("Doctor logged in successfully");
           navigate("/doctor/dashboard");
         }

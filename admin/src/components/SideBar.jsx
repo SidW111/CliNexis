@@ -33,7 +33,7 @@ const SideBar = () => {
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
-            to={"/appointments"}
+            to={"/all-appointments"}
           >
             <RiCalendarScheduleLine size={22}/>
             <p className="md:block hidden">Appointment</p>
@@ -70,7 +70,7 @@ const SideBar = () => {
                 isActive ? "bg-blue-50 border-r-4 border-blue-500 " : " "
               }`
             }
-            to={"/admin-dashboard"}
+            to={"/doctor-dashboard"}
           >
             <RxDashboard size={22} />
             <p className="hidden md:block">Dashboard</p>
@@ -81,7 +81,7 @@ const SideBar = () => {
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
-            to={"/appointments"}
+            to={"/doctor-appointments"}
           >
             <RiCalendarScheduleLine size={22}/>
             <p className="md:block hidden">Appointment</p>
@@ -93,7 +93,7 @@ const SideBar = () => {
                 isActive ? "bg-blue-50 border-r-4 border-blue-500" : ""
               }`
             }
-            to={"/doctors-list"}
+            to={"/doctor-profile"}
           >
             <CgProfile  size={22}/>
             <p className="md:block hidden">Doctors Profile</p>

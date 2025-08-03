@@ -13,8 +13,8 @@ const App = () => {
     <SideBar/>
       <Routes>
         <Route path="/" element={<Login />}></Route>
-        <Route path="doctor/dashboard" element={<DocDashboard />} />
-        <Route path="admin/dashboard" element={<AdminDashboard />} />
+        <Route path="doctor-dashboard" element={<DocDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

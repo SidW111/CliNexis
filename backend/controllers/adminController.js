@@ -171,6 +171,7 @@ export const adminDashBoard =async (req,res)=>{
     }
 
     res.json({
+      success:true,
       message:"dash data fetched successful",
       dashboard:dashData,
       user
