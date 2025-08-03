@@ -3,24 +3,26 @@ import axios from "axios";
 const adminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
-  const [aToken, setAToken] = useState( () =>
+  const [aToken, setAToken] = useState(() =>
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
   );
 
-  const [dashData, setDashData] = useState(false)
+  const [dashData, setDashData] = useState(false);
 
   const getDashData = async () => {
     try {
       const { data } = await axios.get(
         "http://localhost:3000/api/admin/dashboard",
-        {headers:{
-          Authorization:`Bearer ${aToken}`
-        }}
+        {
+          headers: {
+            Authorization: `Bearer ${aToken}`,
+          },
+        }
       );
-      
+
+      if (data.success) {
         setDashData(data);
-        console.log(data.dashData)
-      
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -28,7 +30,7 @@ export const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     getDashData();
-  },[aToken])
+  }, [aToken]);
 
   const value = {
     aToken,
