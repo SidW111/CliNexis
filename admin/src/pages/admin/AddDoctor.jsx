@@ -1,4 +1,7 @@
 import { useState } from "react";
+import {toast} from "react-toastify"
+import axios from "axios"
+import { useAdminContext } from "../../context/AdminContext";
 
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
@@ -9,8 +12,57 @@ const AddDoctor = () => {
   const [fees, setFees] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [degree, setDegree] = useState("");
+  const [about , setAbout]= useState('')
+
+  const {aToken} = useAdminContext()
+
+    const onSubmitHandler = async (event) => {
+    event.preventDefault()
+
+    try {
+      if(!docImg) {
+        return toast.error('Image Not Selected')
+      }
+
+      const formData = new FormData()
+
+      formData.append('image',docImg)
+      formData.append('name',name)
+      formData.append('email',email)
+      formData.append('password',password)
+      formData.append('experience',experience)
+      formData.append('fees',fees)
+      formData.append('degree',degree)
+      formData.append('about',about)
+      formData.append('speciality',speciality)
+    
+
+      //console log form data 
+      formData.forEach((value,key)=>{
+        console.log(`${key} : ${value}`);
+      })
+      
+      const {data} = await axios.post('http://localhost:3000/api/admin/add-doctor',formData, {headers:{Authorization:`Bearer ${aToken}`}})
+
+      if(data){
+        toast.success(data.message)
+        setDocImg(false)
+        setName('')
+        setPassword('')
+        setEmail('')
+        setFees('')
+        setDegree('')
+        setAbout('')
+        
+      }
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error)
+    }
+  }
+
   return (
-    <form action="" className="m-5 w-full">
+    <form onSubmit={onSubmitHandler} action="" className="m-5 w-full">
       <p className="font-medium text-lg mb-3">Add Doctor</p>
       <div className="bg-white px-8 py-8 border rounded w-full max-w-4xl max-h-[80vh] overflow-y-auto">
         {/* Header image section */}
@@ -27,6 +79,7 @@ const AddDoctor = () => {
             />
           </label>
           <input
+          required
             type="file"
             name=""
             id="doc-img"
@@ -48,7 +101,7 @@ const AddDoctor = () => {
                 onChange={(e) => setName(e.target.value)}
                 type="text"
                 placeholder="Name"
-                id=""
+              
                 className="border rounded px-3 py-2"
                 required
               />
@@ -76,10 +129,10 @@ const AddDoctor = () => {
             <div className="flex flex-col gap-3 ">
               <p>Experience</p>
               <select
+              required
                 onChange={(e) => setExperience(e.target.value)}
                 className="border rounded px-3 py-2"
-                name=""
-                id=""
+                
               >
                 <option value="1 Year">1 Year</option>
                 <option value="2 Year">2 Year</option>
@@ -92,13 +145,12 @@ const AddDoctor = () => {
                 <option value="9 Year">9 Year</option>
               </select>
             </div>
-
           </div>
           {/* Right column */}
           <div className="flex lg:flex-1 flex-col gap-6">
             <div className="flex flex-col gap-3">
               <p>Speciality</p>
-              <select
+              <select required
                 onChange={(e) => {
                   setSpeciality(e.target.value);
                 }}
@@ -115,6 +167,7 @@ const AddDoctor = () => {
             <div className="flex flex-col gap-3">
               <p>Degree</p>
               <input
+              required
                 onChange={(e) => setDegree(e.target.value)}
                 placeholder="Education"
                 type="text"
@@ -124,7 +177,8 @@ const AddDoctor = () => {
             <div className="flex flex-col gap-3">
               <p>Fees</p>
               <input
-              placeholder="Fees"
+              required
+                placeholder="Fees"
                 type="Number"
                 onChange={(e) => {
                   setFees(e.target.value);
@@ -136,10 +190,21 @@ const AddDoctor = () => {
         </div>
         {/* About section */}
         <div className="flex flex-col gap-6 mb-6">
-                  <p>About Doctor</p>
-                  <textarea className="border rounded w-full py-2" placeholder="Write about doctor..." rows={5} name="" id=""></textarea>
+          <p>About Doctor</p>
+          <textarea
+          onChange={(e)=> setAbout(e.target.value)}
+            className="border rounded w-full py-2"
+            placeholder="Write about doctor..."
+            rows={5}
+            required
+          ></textarea>
         </div>
-<button type="submit" className=" text-white font-semibold px-10 py-3 bg-blue-500 hover:bg-blue-600 rounded-full ">Add Doctor</button>
+        <button
+          type="submit"
+          className=" text-white font-semibold px-10 py-3 bg-blue-500 hover:bg-blue-600 rounded-full "
+        >
+          Add Doctor
+        </button>
       </div>
     </form>
   );
