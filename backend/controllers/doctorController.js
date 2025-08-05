@@ -14,9 +14,8 @@ export const doctorLogin = async (req, res) => {
     if (!doc) return res.json({ message: "email doesn't exist" });
 
     const isMatch = await bcrypt.compare(password, doc.password);
-  
-    if (!isMatch)
-      return res.json({ message: "unauthorized doctor" });
+
+    if (!isMatch) return res.json({ message: "unauthorized doctor" });
 
     const accessToken = jwt.sign({ docId: doc._id }, process.env.JWT_SECRET, {
       expiresIn: "15m",
@@ -66,11 +65,10 @@ export const newDoctorAccessToken = (req, res) => {
   }
 };
 
-
 export const changeAvailability = async (req, res) => {
   try {
     const docId = req.doctor;
-    console.log(docId)
+    console.log(docId);
     const doc = await doctorModel.findById(docId);
     if (!doc) return res.json({ message: "doctor not found" });
     await doctorModel.findByIdAndUpdate(docId, { available: !doc.available });
@@ -116,10 +114,10 @@ export const appointmentsDoctor = async (req, res) => {
 
 export const getDoctorProfile = async (req, res) => {
   try {
-    const docId  = req.doctor;
+    const docId = req.doctor;
     const doctor = await doctorModel.findById(docId).select("-password");
 
-    res.json({ message: "doctor fetched successfully",doctor });
+    res.json({ message: "doctor fetched successfully", doctor });
   } catch (error) {
     return res.json({
       message: "doctor fetching unsuccessful",
@@ -133,13 +131,17 @@ export const updateDoctorProfile = async (req, res) => {
     const docId = req.doctor;
     const { degree, fees, available, about, experience } = req.body;
 
-    const doctor = await doctorModel.findByIdAndUpdate(docId, {
-      degree,
-      fees,
-      about,
-      available,
-      experience,
-    },{new:true});
+    const doctor = await doctorModel.findByIdAndUpdate(
+      docId,
+      {
+        degree,
+        fees,
+        about,
+        available,
+        experience,
+      },
+      { new: true }
+    );
 
     res.json({ message: "profile updated", doctor });
   } catch (error) {
@@ -179,32 +181,67 @@ export const appointmentComplete = async (req, res) => {
 };
 
 export const appointmentCancel = async (req, res) => {
-try{
-  const {appointmentId} = req.body;
-  const docId = req.doctor;
+  try {
+    const { appointmentId } = req.body;
+    const docId = req.doctor;
 
-  const appointment = await appointmentModel.findOne({
-    _id:appointmentId,
-    docId:docId
-  })
+    const appointment = await appointmentModel.findOne({
+      _id: appointmentId,
+      docId: docId,
+    });
 
-  appointment.cancelled=true;
-  await appointment.save();
+    appointment.cancelled = true;
+    await appointment.save();
 
-  const doctor = await doctorModel.findById(docId);
-  const { slotTime, slotDate } = appointment;
+    const doctor = await doctorModel.findById(docId);
+    const { slotTime, slotDate } = appointment;
 
-  if (doctor.slots_booked[slotDate]) {
-    doctor.slots_booked[slotDate] = doctor.slots_booked[slotDate].filter(
-    (slot) => slot !== slotTime);
-    doctor.save();
-  }
+    if (doctor.slots_booked[slotDate]) {
+      doctor.slots_booked[slotDate] = doctor.slots_booked[slotDate].filter(
+        (slot) => slot !== slotTime
+      );
+      doctor.save();
+    }
 
-  res.json({
+    res.json({
       success: true,
       message: "Appointment cancelled",
     });
   } catch (error) {
-    res.status(500).json({ message: "appointment Cancel failed", error: error.message });
+    res
+      .status(500)
+      .json({ message: "appointment Cancel failed", error: error.message });
+  }
+};
+
+export const docDashBoard = async (req, res) => {
+  try {
+    const { docId } = req.body;
+    const appointments = await appointmentModel.findById({ docId });
+
+    let earnings = 0;
+
+    appointments.map((item) => {
+      if (item.isCompleted || item.payment) {
+        earnings += item.amount;
+      }
+    });
+
+    let patient = [];
+    appointments.map((item) => {
+      if (!patient.includes(item.userId)) patient.push(item.userId);
+    });
+
+    const dashData = {
+      earnings,
+      appointments: appointments.length,
+      patients: patients.length,
+      latestAppointments: appointments.reverse().slice(0, 5),
+    };
+
+    res.json({ success: true, dashData });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
 };
