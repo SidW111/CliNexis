@@ -13,8 +13,8 @@ import ListDoctors from "./pages/admin/ListDoctors";
 
 const App = () => {
   const {aToken} = useAdminContext()
-  const {token} = useDoctorContext()
-  return aToken || token ? (  
+  const {dToken} = useDoctorContext()
+  return aToken || dToken ? (  
     <div className="bg-[#F8F9FD]">
       <ToastContainer />
       <Navbar />
