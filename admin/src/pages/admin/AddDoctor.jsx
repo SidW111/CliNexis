@@ -14,7 +14,7 @@ const AddDoctor = () => {
   const [degree, setDegree] = useState("");
   const [about , setAbout]= useState('')
 
-  const {aToken} = useAdminContext()
+  const {aToken,getAllDoctors} = useAdminContext()
 
     const onSubmitHandler = async (event) => {
     event.preventDefault()
@@ -53,8 +53,8 @@ const AddDoctor = () => {
         setFees('')
         setDegree('')
         setAbout('')
-        
       }
+      getAllDoctors()
     } catch (error) {
       toast.error(error.message)
       console.log(error)

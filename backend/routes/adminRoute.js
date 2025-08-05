@@ -21,10 +21,9 @@ adminRouter.get("/all-doctors", adminAuth, allDoctors);
 
 //api to get all appointments for admin
 adminRouter.get("/allappointment", adminAuth, appointmentsAdmin);
-
+//api to change availablity
 adminRouter.post("/available", adminAuth, changeAvailabilityAdmin);
 //api to cancel appointment for admin
-
 adminRouter.post("/cancel", adminAuth, appointmentCancel);
 
 adminRouter.get("/dashboard", adminAuth, adminDashBoard);

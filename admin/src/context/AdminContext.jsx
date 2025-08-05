@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 const adminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
@@ -79,6 +80,20 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
+  const changeAvailability = async(docId) => {
+    try {
+      const {data} = await axios.post('http://localhost:3000/api/admin/available',{docId},{headers:{Authorization:`Bearer ${aToken}`}})
+      if(data){
+        toast.success(data.message)
+        console.log(data);
+      }
+      getAllDoctors()
+
+    } catch (error) {
+     console.log(error.message) 
+    }
+  }
+
   useEffect(() => {
     if (aToken) {
       getDashData();
@@ -94,6 +109,9 @@ export const AdminProvider = ({ children }) => {
     dashData,
     cancelAppointment,
     appointments,
+    doctors,
+    changeAvailability,
+    getAllDoctors,
   };
 
   return (
