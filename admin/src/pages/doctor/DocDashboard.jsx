@@ -7,12 +7,12 @@ const DocDashboard = () => {
   return (
     dashData && (
       <div className="m-5">
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-3">
           {/* Top side */}
-          <div className="flex min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
-            <img src="../src/assets/cash.png" className="w-16 -mb-1" alt="" />
+          <div className="flex  min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
+            <img src="../src/assets/cash.png" className=" w-10 md:w-14 -mb-1" alt="" />
             <div>
-              <p className="text-xl font-medium text-gray-600">
+              <p className="text-lg font-medium text-gray-600">
                 ${dashData?.earnings}
               </p>
               <p className="font-medium text-gray-700">Earning</p>
@@ -22,11 +22,11 @@ const DocDashboard = () => {
           <div className="flex min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
             <img
               src="../src/assets/appointment.png"
-              className="w-16 -mb-1"
+              className="w-10 md:w-14 -mb-1"
               alt=""
             />
             <div>
-              <p className="text-xl font-medium text-gray-600">
+              <p className="text-lg font-medium text-gray-600">
                 {dashData?.appointments}
               </p>
               <p className="font-medium text-gray-700">Appointments</p>
@@ -36,11 +36,11 @@ const DocDashboard = () => {
           <div className="flex min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
             <img
               src="../src/assets/hospitalisation.png"
-              className="w-16 -mb-1"
+              className="w-10 md:w-14 -mb-1"
               alt=""
             />
             <div>
-              <p className="text-xl font-medium text-gray-600">
+              <p className="text-lg font-medium text-gray-600">
                 {dashData?.patients}
               </p>
               <p className="font-medium text-gray-700">Patients</p>
@@ -50,8 +50,8 @@ const DocDashboard = () => {
         {/* Bottom side */}
         <div className=" bg-white ">
           <div className="flex gap-2 mt-10 border p-4 rounded-t-xl ">
-            <img src="../src/assets/recent.png" className="w-8" alt="" />{" "}
-            <p className="font-bold text-gray-900">Latest Bookings</p>
+            <img src="../src/assets/recent.png" className="w-6 md:w-8" alt="" />{" "}
+            <p className="font-semibold text-gray-900">Latest Bookings</p>
           </div>
           <div className=" pt-4 border border-t-0">
             {dashData.latestAppointments?.map((item, index) => (
@@ -61,11 +61,11 @@ const DocDashboard = () => {
               >
                 <img
                   src={item?.userData?.image}
-                  className="rounded-full w-10"
+                  className="rounded-full w-8 md:w-8"
                   alt={item.userData?.name}
                 />
                 <div className="flex-1">
-                  <p className="text-lg font-medium">{item.userData?.name}</p>
+                  <p className=" font-medium">{item.userData?.name}</p>
                   <p className="text-xs text-gray-500 -mt-[0.5]">
                     {slotDateFormat(item.slotDate)}
                   </p>

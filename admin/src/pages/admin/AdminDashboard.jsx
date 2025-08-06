@@ -26,7 +26,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-3 p-4 min-w-52 bg-white border-gray-100 border cursor-pointer rounded-2xl hover:scale-105 transition-all duration-200">
-              <img src="../src/assets/book.png" className="w-14" />
+              <img src="../src/assets/book.png" className="w-12  lg:rounded-none" />
               <div>
                 <p className="text-xl text-black font-semibold">
                   {dashData.appointments}
