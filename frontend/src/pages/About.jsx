@@ -13,7 +13,7 @@ const About = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center pb-16">
           <div className="flex justify-center">
             <img
-              className="w-full max-w-sm sm:max-w-sm md:max-w-[400px] h-auto object-cover rounded-xl"
+              className="w-full  max-w-sm sm:max-w-sm md:max-w-[400px] h-auto object-cover rounded-xl"
               src="/Doc1.jpg"
               alt="Doctor"
             />
@@ -22,15 +22,15 @@ const About = () => {
             <p className="text-base  leading-relaxed">
               Welcome to <span className="font-semibold">CliNexis</span>, your trusted partner
               in simplifying healthcare access. We’re a team dedicated to
-              transforming how people connect with healthcare professionals—
-              making doctor appointments faster, easier, and stress-free.
+              transforming how people connect with healthcare professionals
+              making doctor appointments faster, easier, and stress free.
             </p>
-            <p className="text-base leading-relaxed">
+            {/* <p className="text-base leading-relaxed">
               CliNexis is committed to excellence in healthcare technology. We
               continuously strive to enhance our platform, integrating the
               latest advancements to improve user experience and deliver
               superior service.
-            </p>
+            </p> */}
             <h3 className="font-bold text-lg text-gray-800">Our Vision</h3>
             <p className="text-base leading-relaxed">
               Our vision at CliNexis is to create a seamless healthcare
@@ -66,7 +66,7 @@ const About = () => {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="flex-1 px-6 py-8 text-center border rounded-xl shadow-sm hover:bg-gradient-to-r from-blue-100 to-pink-100 hover:text-black transition duration-500"
+                className="flex-1 px-6 py-8 text-center border rounded-xl shadow-sm hover:bg-blue-500 hover:text-white transition-all duration-500"
               >
                 <h4 className="font-bold mb-3 text-lg">{item.title}</h4>
                 <p className="text-sm leading-relaxed">{item.desc}</p>

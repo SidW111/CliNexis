@@ -15,7 +15,7 @@ const Contact = () => {
             {/* Image */}
             <div className="flex justify-center">
               <img
-                className="object-cover w-full max-w-[400px] h-auto rounded-lg shadow"
+                className="object-cover lg:w-[75%] w-full max-w-[400px] h-auto rounded-lg shadow"
                 src="/Doc4.jpg"
                 alt="Doctor"
               />

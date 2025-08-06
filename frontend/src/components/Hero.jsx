@@ -61,11 +61,11 @@ const Hero = () => {
         </div>
 
         {/* Right Image Section */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-12 md:mt-0">
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end md:mt-0">
           <img
             src="/HeroImg.png"
             alt="Doctor Illustration"
-            className="w-[80%] sm:w-[70%] md:w-[90%] max-w-[550px] transform scale-x-[-1] [mask-image:linear-gradient(to_bottom,white_80%,transparent)]"
+            className="w-full pl-14 sm:w-[100%] md:w-[100%] lg:pl-10 lg:w-[90vh] max-w-[900px] transform scale-x-[-1]  [mask-image:linear-gradient(to_bottom,white_80%,transparent)]"
           />
         </div>
       </div>

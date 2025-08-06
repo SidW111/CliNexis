@@ -158,7 +158,7 @@ const Navbar = () => {
 
       {/* FULLSCREEN Mobile Menu Overlay */}
       {menuOpen && (
-        <div className="fixed top-0 left-0 z-40 w-full h-screen bg-white flex flex-col items-center justify-center px-6 space-y-6 text-lg text-gray-700 md:hidden transition-all duration-300 ease-in-out">
+        <div className="fixed font-semibold pt-5 left-0 z-40 w-full h-screen bg-white flex flex-col items-center px-6 space-y-6 text-lg text-gray-700 md:hidden transition-all duration-300 ease-in-out">
           {Links.map((link) => (
             <Link
               key={link.name}
