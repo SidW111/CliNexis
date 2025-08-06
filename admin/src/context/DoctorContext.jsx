@@ -9,6 +9,7 @@ export const DoctorProvider = ({ children }) => {
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
   const [dashData, setDashData] = useState([]);
+  const [appointments,setAppointments] = useState([])
 
   // const getProfile = async()=>{
   //   try {
@@ -66,9 +67,23 @@ export const DoctorProvider = ({ children }) => {
     }
   }
 
+  const getAppointments = async() => {
+    try {
+      const {data} = await axios.get('/doctor/get-appointments');
+      if(data){
+        setAppointments(data.appointment)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if (dToken) {
       getDashData();
+      getAppointments();
     }
   }, [dToken]);
 
@@ -77,7 +92,8 @@ export const DoctorProvider = ({ children }) => {
     setDToken,
     dashData,
     cancelAppointment,
-    completeAppointment
+    completeAppointment,
+    appointments
   };
   return (
     <doctorContext.Provider value={value}>{children}</doctorContext.Provider>

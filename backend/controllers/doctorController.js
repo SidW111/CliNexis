@@ -99,8 +99,8 @@ export const doctorList = async (req, res) => {
 //api to get appointments of doctor
 export const appointmentsDoctor = async (req, res) => {
   try {
-    const { docId } = req.doctor;
-    const appointment = await appointmentModel.findById(docId);
+    const  docId  = req.doctor;
+    const appointment = await appointmentModel.find({docId});
     res.json({ message: "appointments fetched", appointment });
   } catch (error) {
     return res.json({
