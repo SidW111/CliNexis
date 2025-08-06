@@ -217,26 +217,25 @@ export const appointmentCancel = async (req, res) => {
 export const docDashBoard = async (req, res) => {
   try {
     const { docId } = req.body;
-    const appointments = await appointmentModel.findById({ docId });
+    const appointments = await appointmentModel.find({ docId });
 
     let earnings = 0;
-
-    appointments.map((item) => {
+    appointments.forEach((item) => {
       if (item.isCompleted || item.payment) {
         earnings += item.amount;
       }
     });
 
     let patient = [];
-    appointments.map((item) => {
+    appointments.forEach((item) => {
       if (!patient.includes(item.userId)) patient.push(item.userId);
     });
 
     const dashData = {
       earnings,
-      appointments: appointments.length,
-      patients: patients.length,
-      latestAppointments: appointments.reverse().slice(0, 5),
+      appointments: appointments?.length,
+      patients: patient?.length,
+      latestAppointments: appointments?.reverse().slice(0, 5),
     };
 
     res.json({ success: true, dashData });

@@ -1,5 +1,5 @@
 import express from "express"
-import { appointmentCancel, appointmentComplete, appointmentsDoctor, changeAvailability, doctorList, doctorLogin, getDoctorProfile, newDoctorAccessToken, updateDoctorProfile } from "../controllers/doctorController.js";
+import { appointmentCancel, appointmentComplete, appointmentsDoctor, changeAvailability, docDashBoard, doctorList, doctorLogin, getDoctorProfile, newDoctorAccessToken, updateDoctorProfile } from "../controllers/doctorController.js";
 import { verifyDoctorAccessToken, verifyDoctorRefreshToken } from "../middlewares/doctorAuth.js";
 
 const doctorRouter = express.Router();
@@ -23,6 +23,8 @@ doctorRouter.post("/update-doctor",verifyDoctorAccessToken,updateDoctorProfile);
 //api to cancel appointment 
 doctorRouter.post('/cancel-appointment',verifyDoctorAccessToken,appointmentCancel);
 //api to mark complete
-doctorRouter.post('/complete-appointment',verifyDoctorAccessToken,appointmentComplete)
+doctorRouter.post('/complete-appointment',verifyDoctorAccessToken,appointmentComplete);
+
+doctorRouter.get('/dashboard',verifyDoctorAccessToken,docDashBoard)
 
 export default doctorRouter
