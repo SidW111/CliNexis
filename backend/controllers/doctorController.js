@@ -216,7 +216,7 @@ export const appointmentCancel = async (req, res) => {
 
 export const docDashBoard = async (req, res) => {
   try {
-    const { docId } = req.body;
+    const { docId } = req.doctor;
     const appointments = await appointmentModel.find({ docId });
 
     let earnings = 0;

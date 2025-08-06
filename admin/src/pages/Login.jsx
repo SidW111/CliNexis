@@ -43,7 +43,7 @@ const Login = () => {
           setDToken(token);
           localStorage.removeItem("aToken");
           toast.success("Doctor logged in successfully");
-          navigate("/doctor/dashboard");
+          navigate("/doctor-dashboard");
         }
       } catch (error) {
         console.log(error);

@@ -16,7 +16,7 @@ doctorRouter.get("/get-doctor",doctorList)
 //apppoinments of dr
 doctorRouter.get("/get-appointments",verifyDoctorAccessToken,appointmentsDoctor);
 //api to get dr  profile
-doctorRouter.get("/get-profile",verifyDoctorAccessToken,getDoctorProfile);
+doctorRouter.get("/profile",verifyDoctorAccessToken,getDoctorProfile);
 //api to update dr profile
 doctorRouter.post("/update-doctor",verifyDoctorAccessToken,updateDoctorProfile);
 
