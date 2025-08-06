@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "../services/axiosInstance";
+import { toast } from "react-toastify";
 
 const doctorContext = createContext();
 
@@ -35,6 +36,32 @@ export const DoctorProvider = ({ children }) => {
     }
   };
 
+  const cancelAppointment = async(appointmentId) => {
+    try {
+      const {data} = axios.post('/doctor/cancel-appointment',{appointmentId})
+      if(data){
+        toast.success("Appointment Cancelled Successfully")
+      }else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const completeAppointment = async(appointmentId) => {
+    try {
+      const {data} = axios.post('/doctor/complete-appointment',{appointmentId})
+      if(data){
+        toast.success("Appointment Completed Successfully")
+      }else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if (dToken) {
       getDashData();
@@ -44,7 +71,9 @@ export const DoctorProvider = ({ children }) => {
   const value = {
     dToken,
     setDToken,
-    dashData
+    dashData,
+    cancelAppointment,
+    completeAppointment
   };
   return (
     <doctorContext.Provider value={value}>{children}</doctorContext.Provider>
