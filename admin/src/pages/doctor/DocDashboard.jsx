@@ -1,7 +1,6 @@
 import { useAppContext } from "../../context/AppContext";
 import { useDoctorContext } from "../../context/DoctorContext";
-import { RxCross2 } from "react-icons/rx";
-import { MdDone } from "react-icons/md";
+
 const DocDashboard = () => {
   const { dashData,cancelAppointment,completeAppointment } = useDoctorContext();
   const { slotDateFormat } = useAppContext();
@@ -71,7 +70,7 @@ const DocDashboard = () => {
                     {slotDateFormat(item.slotDate)}
                   </p>
                 </div>
-                {item.isCancelled ? (
+                {item.cancelled ? (
                   <p className="text-red-600 font-medium text-xs">Cancelled</p>
                 ) : item.isCompleted ? (
                   <p className="text-green-600 font-medium text-xs">
@@ -81,11 +80,11 @@ const DocDashboard = () => {
                   <div className="flex">
                     <img src="../src/assets/cancel_icon.svg" alt="cancel icon" 
                     className="w-10 cursor-pointer"
-                    
+                    onClick={()=> cancelAppointment(item._id)}
                     />
                     <img src="../src/assets/tick_icon.svg" alt="cancel icon" 
                     className="w-10 cursor-pointer"
-                    
+                    onClick={() => completeAppointment(item._id)}
                     />
                   </div>
                 )}

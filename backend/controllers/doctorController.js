@@ -154,8 +154,8 @@ export const updateDoctorProfile = async (req, res) => {
 
 export const appointmentComplete = async (req, res) => {
   try {
-    const { docId } = req.doctor;
-    const appointmentId = req.body;
+    const  docId  = req.doctor;
+    const {appointmentId} = req.body;
 
     const appointment = await appointmentModel.findOne({
       _id: appointmentId,
@@ -170,6 +170,7 @@ export const appointmentComplete = async (req, res) => {
     await appointment.save();
 
     res.json({
+      success:true,
       message: "appointment marked completed",
     });
   } catch (error) {
@@ -202,6 +203,7 @@ export const appointmentCancel = async (req, res) => {
       );
       doctor.save();
     }
+
 
     res.json({
       success: true,

@@ -36,13 +36,16 @@ export const DoctorProvider = ({ children }) => {
     }
   };
 
+
   const cancelAppointment = async(appointmentId) => {
     try {
-      const {data} = axios.post('/doctor/cancel-appointment',{appointmentId})
-      if(data){
+      const {data} =await axios.post('/doctor/cancel-appointment',{appointmentId})
+      
+      if(data.success){
         toast.success("Appointment Cancelled Successfully")
+        getDashData()
       }else {
-        toast.error(data.message)
+        toast.error(data?.message)
       }
     } catch (error) {
       console.log(error)
@@ -51,11 +54,12 @@ export const DoctorProvider = ({ children }) => {
 
   const completeAppointment = async(appointmentId) => {
     try {
-      const {data} = axios.post('/doctor/complete-appointment',{appointmentId})
-      if(data){
+      const {data} =await axios.post('/doctor/complete-appointment',{appointmentId})
+      if(data.success){
         toast.success("Appointment Completed Successfully")
+        getDashData()
       }else {
-        toast.error(data.message)
+        toast.error(data?.message)
       }
     } catch (error) {
       console.log(error)
