@@ -27,7 +27,6 @@ export const DoctorProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${dToken}` },
       });
       if (data.success) {
-        console.log(data.dashData);
         setDashData(data.dashData);
       } else {
         console.log("Error :", data.message);
@@ -44,6 +43,7 @@ export const DoctorProvider = ({ children }) => {
       
       if(data.success){
         toast.success("Appointment Cancelled Successfully")
+        getAppointments()
         getDashData()
       }else {
         toast.error(data?.message)
@@ -58,6 +58,7 @@ export const DoctorProvider = ({ children }) => {
       const {data} =await axios.post('/doctor/complete-appointment',{appointmentId})
       if(data.success){
         toast.success("Appointment Completed Successfully")
+        getAppointments()
         getDashData()
       }else {
         toast.error(data?.message)
