@@ -7,7 +7,6 @@ export const DoctorProvider = ({ children }) => {
   const [dToken, setDToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
-
   const [dashData, setDashData] = useState([]);
 
   // const getProfile = async()=>{
@@ -26,7 +25,8 @@ export const DoctorProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${dToken}` },
       });
       if (data.success) {
-        setDashData(data);
+        console.log(data.dashData);
+        setDashData(data.dashData);
       } else {
         console.log("Error :", data.message);
       }
@@ -44,6 +44,7 @@ export const DoctorProvider = ({ children }) => {
   const value = {
     dToken,
     setDToken,
+    dashData
   };
   return (
     <doctorContext.Provider value={value}>{children}</doctorContext.Provider>
