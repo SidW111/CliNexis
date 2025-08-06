@@ -12,7 +12,6 @@ const Home = () => {
       <SpecialitySearch />
       <TopDoctors />
       <SpecialityMenu />
-      <Footer/>
     </>
   );
 };

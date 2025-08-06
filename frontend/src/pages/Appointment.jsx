@@ -143,7 +143,7 @@ const Appointment = () => {
 }
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 p-2">
       <div className="max-w-6xl mx-auto">
         {/* Doc Details */}
         <div className="flex flex-col sm:flex-row gap-4">

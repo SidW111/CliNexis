@@ -1,14 +1,14 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import axios from "../services/axiosInstance";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 const MyProfile = () => {
-  const { userData ,getUserData} = useAppContext();
+  const { userData, getUserData } = useAppContext();
   const [isEdit, setIsEdit] = useState(false);
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
-  const [image, setImage] = useState("");
+  const [gender, setGender] = useState(userData?.gender || "");
+  const [dob, setDob] = useState(userData?.dob || "");
+  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const save = async () => {
@@ -16,115 +16,127 @@ const MyProfile = () => {
     const formData = new FormData();
     formData.append("gender", gender);
     formData.append("dob", dob);
-    formData.append("image", image);
+    if (image) formData.append("image", image);
 
     try {
-      const data = await axios.post("/user/update-profile", formData);
+      const { data } = await axios.post("/user/update-profile", formData);
       if (data) {
-        getUserData()
+        getUserData();
         setIsEdit(false);
-        setImage(false)
+        setImage(null);
         toast.success("Profile updated!");
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data?.message)
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="h-screen">
-      <div className="max-w-5xl mx-auto mt-10">
-        <div className="w-1/2">
-          {isEdit ? (
-            <div className="w-[150px]">
-              <label htmlFor="image">
-                <div className="w-[150px]">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-10">
+          {/* Profile Image */}
+          <div className="flex-shrink-0">
+            {isEdit ? (
+              <label htmlFor="image" className="relative cursor-pointer block w-36 h-36">
+                <img
+                  src={
+                    image
+                      ? URL.createObjectURL(image)
+                      : userData?.image || "/placeholder.png"
+                  }
+                  alt="Profile"
+                  className="rounded-full w-full h-full object-cover opacity-90"
+                />
+                <div className="absolute bottom-0 right-0 w-8 h-8">
                   <img
-                    className="w-36 rounded opacity-75"
-                    src={image ? URL.createObjectURL(image) : userData.image}
-                    alt=""
-                  />
-                  <img
-                    className="w-10 absolute top-44 left-72"
-                    src={image ? " " : "/upload_icon.png"}
-                    alt=""
-                  />
-                  <input
-                    type="file"
-                    id="image"
-                    onChange={(e) => setImage(e.target.files[0])}
-                    hidden
+                    src="/upload_icon.png"
+                    alt="Upload"
+                    className="w-full h-full"
                   />
                 </div>
-              </label>
-            </div>
-          ) : (
-            <img className="w-44 object-cover" src={userData?.image} alt="" />
-          )}
-          <p className="mt-5 font-semibold text-4xl mb-5">{userData?.name}</p>
-          <p className="bg-black h-[1px]"></p>
-
-          <div className="mt-5">
-            <p className="mb-3 text-xl text-gray-600 font-medium underline outline-offset-1">
-              Information
-            </p>
-            <div className="grid grid-cols-[1fr_3fr] gap-20 m-2">
-              <p className="font-semibold">Email:</p>
-              <p>{userData?.email}</p>
-            </div>
-            <div className="grid grid-cols-[1fr_3fr] gap-20 m-2">
-              <p className="font-semibold">Gender:</p>
-              {isEdit ? (
-                <select
-                  onChange={(e) => {
-                    setGender(e.target.value);
-                  }}
-                  value={gender || userData?.gender}
-                  className="w-[150px]"
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              ) : (
-                <p>{userData?.gender ? userData?.gender : "Gender"}</p>
-              )}
-            </div>
-            <div className="grid grid-cols-[1fr_3fr] gap-20 m-2">
-              <p className="font-semibold">DOB:</p>
-              {isEdit ? (
                 <input
-                  onChange={(e) => setDob(e.target.value)}
-                  className="w-[150px]"
-                  value={userData?.dob || dob}
-                  type="date"
+                  type="file"
+                  id="image"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  hidden
                 />
-              ) : (
-                <p>{userData?.dob ? userData?.dob : "dd-mm-yy"}</p>
-              )}
+              </label>
+            ) : (
+              <img
+                className="w-36 h-36 rounded-full object-cover"
+                src={userData?.image || "/placeholder.png"}
+                alt="Profile"
+              />
+            )}
+          </div>
+
+          {/* Profile Info */}
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">{userData?.name}</h1>
+            <hr className="mb-6" />
+
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:gap-4">
+                <span className="font-semibold w-28">Email:</span>
+                <span>{userData?.email}</span>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:gap-4">
+                <span className="font-semibold w-28">Gender:</span>
+                {isEdit ? (
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="border px-2 py-1 w-40 rounded"
+                  >
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                ) : (
+                  <span>{userData?.gender || "Not set"}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:gap-4">
+                <span className="font-semibold w-28">DOB:</span>
+                {isEdit ? (
+                  <input
+                    type="date"
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
+                    className="border px-2 py-1 w-40 rounded"
+                  />
+                ) : (
+                  <span>{userData?.dob || "Not set"}</span>
+                )}
+              </div>
             </div>
 
-            {isEdit ? (
-              <div className="pt-5">
+            {/* Buttons */}
+            <div className="mt-8">
+              {isEdit ? (
                 <button
-                  onClick={() => save()}
-                  className="px-10 py-3 border border-black bg-blue-100 rounded-full"
+                  onClick={save}
+                  disabled={loading}
+                  className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
                 >
-                  Save
+                  {loading ? "Saving..." : "Save"}
                 </button>
-              </div>
-            ) : (
-              <div className="pt-5">
+              ) : (
                 <button
                   onClick={() => setIsEdit(true)}
-                  className="px-10 py-3 border border-black bg-blue-100 rounded-full"
+                  className="border border-blue-600 text-blue-600 px-6 py-2 rounded-full hover:bg-blue-50 transition"
                 >
                   Edit
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -133,10 +145,3 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
-
-{
-  /* <div className="grid grid-cols-[1fr_3fr] gap-20 m-2">
-  <p className="font-semibold">CreatedAt:</p>
-  <p>{userData?.createdAt ? userData?.createdAt.date : "Date"}</p>
-</div> */
-}

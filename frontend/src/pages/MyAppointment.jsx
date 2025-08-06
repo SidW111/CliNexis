@@ -128,7 +128,7 @@ const MyAppointment = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="p-2">
       <div className="max-w-5xl h-screen mx-auto">
         <div className="">
           <p className="pb-3 mt-10 font-medium border-b text-zinc-700">
