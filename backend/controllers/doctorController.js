@@ -230,6 +230,7 @@ export const docDashBoard = async (req, res) => {
     appointments.forEach((item) => {
       if (!patient.includes(item.userId)) patient.push(item.userId);
     });
+    
 
     const dashData = {
       earnings,
