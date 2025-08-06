@@ -10,6 +10,7 @@ export const DoctorProvider = ({ children }) => {
   );
   const [dashData, setDashData] = useState([]);
   const [appointments,setAppointments] = useState([])
+  const [profileData,setProfileData] = useState('')
 
   // const getProfile = async()=>{
   //   try {
@@ -20,6 +21,19 @@ export const DoctorProvider = ({ children }) => {
   //     console.log(error)
   //   }
   // }
+
+  const getProfileData= async() => {
+    try {
+      const {data} = await axios.get('/doctor/profile')
+      if(data){
+        setProfileData(data.doctor)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getDashData = async () => {
     try {
@@ -81,10 +95,25 @@ export const DoctorProvider = ({ children }) => {
     }
   }
 
+ const handleAvailability = async() => {
+    try {
+        const {data} = await axios.post('/doctor/change-availability');
+        if(data){
+            toast.success(data.message)
+            getProfileData();
+        }else{
+            toast.error(data.message)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
   useEffect(() => {
     if (dToken) {
       getDashData();
       getAppointments();
+      getProfileData();
     }
   }, [dToken]);
 
@@ -94,7 +123,9 @@ export const DoctorProvider = ({ children }) => {
     dashData,
     cancelAppointment,
     completeAppointment,
-    appointments
+    appointments,
+    profileData,
+    handleAvailability
   };
   return (
     <doctorContext.Provider value={value}>{children}</doctorContext.Provider>

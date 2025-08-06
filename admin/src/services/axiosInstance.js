@@ -42,6 +42,7 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return axiosInstance(originalRequest);
       } catch (error) {
+        console.log("errorrrrrrrr froma axios instanceee")
         localStorage.removeItem("token");
         console.log(error.message + "Refresh token failed");
         window.location.href = "/login";

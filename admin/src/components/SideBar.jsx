@@ -4,7 +4,6 @@ import { RxDashboard } from "react-icons/rx";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import { PiUserList } from "react-icons/pi";
-import { useEffect } from "react";
 import { useDoctorContext } from "../context/DoctorContext";
 import { CgProfile } from "react-icons/cg";
 

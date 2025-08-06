@@ -9,7 +9,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {aToken,setDToken} = useDoctorContext();
+  const {setDToken} = useDoctorContext();
   const {setAToken} = useAdminContext();
 
   const navigate = useNavigate();
