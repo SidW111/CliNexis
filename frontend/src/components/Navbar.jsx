@@ -123,7 +123,7 @@ const Navbar = () => {
             ) : (
               <Link to="/login">
                 <button className="bg-white px-5 py-2 rounded-full font-medium text-gray-800 shadow-lg hover:bg-gray-100 transition">
-                  Sign Up
+                  Sign In
                 </button>
               </Link>
             )}

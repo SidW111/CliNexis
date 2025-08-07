@@ -34,14 +34,14 @@ const SpecialityMenu = () => {
         <div className="flex-1 relative w-full h-[350px] sm:h-[400px] md:h-[450px] flex items-center justify-center">
           {/* First Image */}
           <img
-            className="rounded-xl object-cover w-2/3 h-[70%] z-10 relative shadow-lg"
+            className="rounded-xl object-cover w-full lg:w-2/3 h-[70%] z-10 md:-top-12 relative shadow-lg"
             src="/docCheck1.jpg"
             alt="Doctor Checking"
           />
 
           {/* Overlapping Image */}
           <img
-            className="rounded-xl object-cover w-2/3 h-[70%] absolute top-28 left-28 hidden sm:block shadow-lg"
+            className="rounded-xl object-cover w-2/3 h-[70%] absolute top-36 left-44  hidden sm:block shadow-lg"
             src="/docCheck2.jpg"
             alt="Doctor Checking 2"
           />

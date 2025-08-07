@@ -10,7 +10,7 @@ const DocDashboard = () => {
         <div className="flex flex-wrap gap-3">
           {/* Top side */}
           <div className="flex  min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
-            <img src="../src/assets/cash.png" className=" w-10 md:w-14 -mb-1" alt="" />
+            <img src="/cash.png" className=" w-10 md:w-14 -mb-1" alt="" />
             <div>
               <p className="text-lg font-medium text-gray-600">
                 ${dashData?.earnings}
@@ -35,7 +35,7 @@ const DocDashboard = () => {
 
           <div className="flex min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
             <img
-              src="../src/assets/hospitalisation.png"
+              src="/hospitalisation.png"
               className="w-10 md:w-14 -mb-1"
               alt=""
             />
@@ -50,7 +50,7 @@ const DocDashboard = () => {
         {/* Bottom side */}
         <div className=" bg-white ">
           <div className="flex gap-2 mt-10 border p-4 rounded-t-xl ">
-            <img src="../src/assets/recent.png" className="w-6 md:w-8" alt="" />{" "}
+            <img src="/recent.png" className="w-6 md:w-8" alt="" />{" "}
             <p className="font-semibold text-gray-900">Latest Bookings</p>
           </div>
           <div className=" pt-4 border border-t-0">
@@ -78,11 +78,11 @@ const DocDashboard = () => {
                   </p>
                 ) : (
                   <div className="flex">
-                    <img src="../src/assets/cancel_icon.svg" alt="cancel icon" 
+                    <img src="/cancel_icon.svg" alt="cancel icon" 
                     className="w-10 cursor-pointer"
                     onClick={()=> cancelAppointment(item._id)}
                     />
-                    <img src="../src/assets/tick_icon.svg" alt="cancel icon" 
+                    <img src="/tick_icon.svg" alt="cancel icon" 
                     className="w-10 cursor-pointer"
                     onClick={() => completeAppointment(item._id)}
                     />

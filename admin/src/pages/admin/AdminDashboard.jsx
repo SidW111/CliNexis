@@ -15,7 +15,7 @@ const AdminDashboard = () => {
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-3 p-4 min-w-52 bg-white border-gray-100 border cursor-pointer rounded-2xl hover:scale-105 transition-all duration-200">
               <img
-                src="../src/assets/doctor.png"
+                src="/doctor.png"
                 className="w-12 rounded-full"
               />
               <div>
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-3 p-4 min-w-52 bg-white border-gray-100 border cursor-pointer rounded-2xl hover:scale-105 transition-all duration-200">
-              <img src="../src/assets/book.png" className="w-12  lg:rounded-none" />
+              <img src="/book.png" className="w-12  lg:rounded-none" />
               <div>
                 <p className="text-xl text-black font-semibold">
                   {dashData.appointments}
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-3 p-4 min-w-52 bg-white border-gray-100 border cursor-pointer rounded-2xl hover:scale-105 transition-all duration-200">
-              <img src="../src/assets/teamwork.png" className="w-14" />
+              <img src="/teamwork.png" className="w-14" />
               <div>
                 <p className="text-xl text-black font-semibold">
                   {dashData.patients}
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
           <div className="mt-10 bg-white">
             <div className="flex items-center gap-2.5 px-4 py-4 rounded-t border">
               <img
-                src="../src/assets/calendar-time.png"
+                src="/calendar-time.png"
                 className="w-10"
                 alt="calendar"
               />

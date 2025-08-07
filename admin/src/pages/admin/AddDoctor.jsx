@@ -73,7 +73,7 @@ const AddDoctor = () => {
               src={
                 docImg
                   ? URL.createObjectURL(docImg)
-                  : "../src/assets/upload_area.svg"
+                  : "/upload_area.svg"
               }
               alt="Upload"
             />

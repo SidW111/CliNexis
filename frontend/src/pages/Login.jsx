@@ -6,7 +6,7 @@ import { useAppContext } from "../context/AppContext";
 
 const Login = () => {
   const {setAccessToken,setUser,setIsLoggedIn}= useAppContext()
-  const [state, setState] = useState("Sign Up");
+  const [state, setState] = useState("Sign In");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
