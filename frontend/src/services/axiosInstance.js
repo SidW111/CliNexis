@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://clinexis.onrender.com/api",
+  baseURL: "http://localhost:3000/api",
   withCredentials: true,
 });
 
@@ -20,7 +20,7 @@ axiosInstance.interceptors.response.use(
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const res = await axios.get("https://clinexis.onrender.com/api/user/refresh", {
+        const res = await axios.get("http://localhost:3000/api/user/refresh", {
           withCredentials: true,
         });
         if (res) {
