@@ -14,8 +14,20 @@ connectDB()
 connectCloudinary()
 app.use(express.json())
 
+const allowedOrigins = [
+  "https://clinexis-admin.onrender.com",
+  "http://localhost:5173",
+  "https://clinexis-fe.onrender.com"
+]
+
 app.use(cors({
-  // origin:"http://localhost:5173",
+  origin: function(origin,callback) {
+    if(!origin || origin.includes(allowedOrigins)){
+      callback(null,true)
+    }else{
+      callback(new Error("not allowed by the cors"))
+    }
+  },
   credentials:true
 }))
 
