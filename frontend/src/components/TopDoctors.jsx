@@ -24,7 +24,7 @@ const TopDoctors = () => {
         {/* Responsive Card Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pb-10">
           {doctor.slice(0, 10).map((list) => (
-            <div
+            <div onClick={() => navigate(`/appointment/${list._id}`)}
               key={list.name}
               className="flex flex-col h-full bg-white border-2 border-blue-200 rounded-2xl overflow-hidden hover:scale-[1.03] transition-all duration-500"
             >
