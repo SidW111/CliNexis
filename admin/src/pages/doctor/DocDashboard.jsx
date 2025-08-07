@@ -21,7 +21,7 @@ const DocDashboard = () => {
 
           <div className="flex min-w-52 items-center gap-3 bg-white border  rounded-xl p-4 hover:scale-110 transition-all duration-500">
             <img
-              src="../src/assets/appointment.png"
+              src="/appointment.png"
               className="w-10 md:w-14 -mb-1"
               alt=""
             />
