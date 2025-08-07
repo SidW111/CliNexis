@@ -1,9 +1,9 @@
-let accessToken = null;
+// let accessToken = null;
 
-export const setAccessTokenMemory = (token) => {
-  const accessToken = token;
-};
+// export const setAccessTokenMemory = (token) => {
+//   const accessToken = token;
+// };
 
-export const getAccessTokenMemory = () => {
-  return accessToken;
-};
+// export const getAccessTokenMemory = () => {
+//   return accessToken;
+// };
