@@ -6,6 +6,7 @@ import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
 
 export const specialityData = [
+    
     {
         speciality: 'General Physician',
         image: General_physician
