@@ -3,7 +3,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 const adminContext = createContext();
 
+
+
 export const AdminProvider = ({ children }) => {
+
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const [aToken, setAToken] = useState(() =>
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
   );
@@ -15,7 +20,7 @@ export const AdminProvider = ({ children }) => {
   const getDashData = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/admin/dashboard",
+        `${backendURL}/admin/dashboard`,
         {
           headers: {
             Authorization: `Bearer ${aToken}`,
@@ -34,7 +39,7 @@ export const AdminProvider = ({ children }) => {
   const getAllAppointments = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/admin/allappointment",
+        `${backendURL}/admin/allappointment`,
         {
           headers: {
             Authorization: `Bearer ${aToken}`,
@@ -51,7 +56,7 @@ export const AdminProvider = ({ children }) => {
   const cancelAppointment = async (appointmentId) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/admin/cancel",
+        `${backendURL}/admin/cancel`,
         { appointmentId },
         {
           headers: {
@@ -61,6 +66,7 @@ export const AdminProvider = ({ children }) => {
       );
       if (data) {
         getAllAppointments();
+        toast.success("appointment cancelled successfully")
       }
     } catch (error) {
       console.log(error.message);
@@ -70,7 +76,7 @@ export const AdminProvider = ({ children }) => {
   const getAllDoctors = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/admin/all-doctors",
+        `${backendURL}/admin/all-doctors`,
         { headers: { Authorization: `Bearer ${aToken}` } }
       );
       console.log(data.doctor);
@@ -82,7 +88,7 @@ export const AdminProvider = ({ children }) => {
 
   const changeAvailability = async(docId) => {
     try {
-      const {data} = await axios.post('http://localhost:3000/api/admin/available',{docId},{headers:{Authorization:`Bearer ${aToken}`}})
+      const {data} = await axios.post(`${backendURL}/admin/available`,{docId},{headers:{Authorization:`Bearer ${aToken}`}})
       if(data){
         toast.success(data.message)
         console.log(data);
@@ -112,6 +118,7 @@ export const AdminProvider = ({ children }) => {
     doctors,
     changeAvailability,
     getAllDoctors,
+    backendURL
   };
 
   return (

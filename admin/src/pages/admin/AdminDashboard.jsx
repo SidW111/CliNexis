@@ -4,7 +4,7 @@ import { useAppContext } from "../../context/AppContext";
 import { MdCancelPresentation } from "react-icons/md";
 
 const AdminDashboard = () => {
-  const { dashData, cancelAppointment,getDashData } = useAdminContext();
+  const { dashData, cancelAppointment } = useAdminContext();
   const { slotDateFormat } = useAppContext();
 
 

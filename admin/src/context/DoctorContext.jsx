@@ -9,31 +9,23 @@ export const DoctorProvider = ({ children }) => {
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
   const [dashData, setDashData] = useState([]);
-  const [appointments,setAppointments] = useState([])
-  const [profileData,setProfileData] = useState('')
+  const [appointments, setAppointments] = useState([]);
+  const [profileData, setProfileData] = useState("");
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-  // const getProfile = async()=>{
-  //   try {
-  //     const {data} = await axios.get('/doctor/profile',{headers:{Authorization:`Bearer ${dToken}`}})
-  //     console.log(data.doctor);
-  //     setProfile(data.doctor)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
-  const getProfileData= async() => {
+  const getProfileData = async () => {
     try {
-      const {data} = await axios.get('/doctor/profile')
-      if(data){
-        setProfileData(data.doctor)
-      }else{
-        toast.error(data.message)
+      const { data } = await axios.get("/doctor/profile");
+      if (data) {
+        setProfileData(data.doctor);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const getDashData = async () => {
     try {
@@ -50,64 +42,67 @@ export const DoctorProvider = ({ children }) => {
     }
   };
 
-
-  const cancelAppointment = async(appointmentId) => {
+  const cancelAppointment = async (appointmentId) => {
     try {
-      const {data} =await axios.post('/doctor/cancel-appointment',{appointmentId})
-      
-      if(data.success){
-        toast.success("Appointment Cancelled Successfully")
-        getAppointments()
-        getDashData()
-      }else {
-        toast.error(data?.message)
+      const { data } = await axios.post("/doctor/cancel-appointment", {
+        appointmentId,
+      });
+
+      if (data.success) {
+        toast.success("Appointment Cancelled Successfully");
+        getAppointments();
+        getDashData();
+      } else {
+        toast.error(data?.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const completeAppointment = async(appointmentId) => {
+  const completeAppointment = async (appointmentId) => {
     try {
-      const {data} =await axios.post('/doctor/complete-appointment',{appointmentId})
-      if(data.success){
-        toast.success("Appointment Completed Successfully")
-        getAppointments()
-        getDashData()
-      }else {
-        toast.error(data?.message)
+      const { data } = await axios.post("/doctor/complete-appointment", {
+        appointmentId,
+      });
+      if (data.success) {
+        toast.success("Appointment Completed Successfully");
+        getAppointments();
+        getDashData();
+      } else {
+        toast.error(data?.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const getAppointments = async() => {
+  const getAppointments = async () => {
     try {
-      const {data} = await axios.get('/doctor/get-appointments');
-      if(data){
-        setAppointments(data.appointment)
-      }else{
-        toast.error(data.message)
+      const { data } = await axios.get("/doctor/get-appointments");
+      if (data) {
+        setAppointments(data.appointment);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
- const handleAvailability = async() => {
+  const handleAvailability = async () => {
     try {
-        const {data} = await axios.post('/doctor/change-availability');
-        if(data){
-            toast.success(data.message)
-            getProfileData();
-        }else{
-            toast.error(data.message)
-        }
+      const { data } = await axios.post("/doctor/change-availability");
+      if (data) {
+        toast.success(data.message);
+        getProfileData();
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-}
+  };
 
   useEffect(() => {
     if (dToken) {
@@ -125,7 +120,7 @@ export const DoctorProvider = ({ children }) => {
     completeAppointment,
     appointments,
     profileData,
-    handleAvailability
+    handleAvailability,
   };
   return (
     <doctorContext.Provider value={value}>{children}</doctorContext.Provider>

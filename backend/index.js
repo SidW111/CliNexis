@@ -15,7 +15,7 @@ connectCloudinary()
 app.use(express.json())
 
 app.use(cors({
-  origin:"https://clinexis-fe.onrender.com",
+  origin:"http://localhost:5173",
   credentials:true
 }))
 

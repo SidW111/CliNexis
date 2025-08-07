@@ -14,7 +14,7 @@ const AddDoctor = () => {
   const [degree, setDegree] = useState("");
   const [about , setAbout]= useState('')
 
-  const {aToken,getAllDoctors} = useAdminContext()
+  const {aToken,getAllDoctors,backendURL} = useAdminContext()
 
     const onSubmitHandler = async (event) => {
     event.preventDefault()
@@ -42,7 +42,7 @@ const AddDoctor = () => {
         console.log(`${key} : ${value}`);
       })
       
-      const {data} = await axios.post('http://localhost:3000/api/admin/add-doctor',formData, {headers:{Authorization:`Bearer ${aToken}`}})
+      const {data} = await axios.post(`${backendURL}/admin/add-doctor`,formData, {headers:{Authorization:`Bearer ${aToken}`}})
 
       if(data){
         toast.success(data.message)
