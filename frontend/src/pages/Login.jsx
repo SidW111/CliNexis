@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 
 const Login = () => {
-  const {setAccessToken,setUser,setIsLoggedIn}= useAppContext()
+  const { setAccessToken, setUser, setIsLoggedIn } = useAppContext();
   const [state, setState] = useState("Sign In");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,17 +14,21 @@ const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    
+
     if (state === "Sign Up") {
       try {
         const res = await axios.post("/user/signup", { name, email, password });
         if (res) {
           console.log("Sign Up SuccessFull");
-          toast.success("sign Up successfull")
+
+          toast.success("sign Up successfull");
+          navigate("/login");
+          setState("Sign In");
         } else {
-          toast.error(res.data.message);
+          toast.error(res.data.message || "Something went wrong");
         }
       } catch (error) {
+        toast.error(error?.response?.data?.message || error.message);
         return console.log(error.message);
       }
     } else {
@@ -33,15 +37,16 @@ const Login = () => {
         if (res) {
           localStorage.setItem("token", res.data.accessToken);
           console.log("Sign In SuccessFull");
-          toast.success("sign In successfull")
-          navigate('/')
-          setAccessToken(res.data.accessToken)
-          setUser(res.data.user)
-          setIsLoggedIn(true)
+          toast.success("sign In successfull");
+          navigate("/");
+          setAccessToken(res.data.accessToken);
+          setUser(res.data.user);
+          setIsLoggedIn(true);
         } else {
           toast.error(res.data.message);
         }
       } catch (error) {
+        toast.error(error?.response?.data?.message || error.message);
         return console.log(error.message);
       }
     }
@@ -53,14 +58,12 @@ const Login = () => {
           {state === "Sign Up" ? "Sign Up" : "Sign In"}
         </h2>
 
-        {/* {state === "Sign Up" && (
-          <p className="pl-2 ">Create an account to book appointment</p>
-        )} */}
         <div className="p-2">
           {state === "Sign Up" && (
             <div>
               <label>Name</label>
               <input
+                required
                 className="shadow-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black-300 p-2 border w-full rounded-md bg-gray-"
                 type="text"
                 placeholder="Enter your name"
@@ -73,6 +76,7 @@ const Login = () => {
           <div>
             <label>Email</label>
             <input
+              required
               className="shadow-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black-300 p-2 border w-full rounded-md bg-gray-"
               type="email"
               placeholder="Enter your email"
@@ -81,8 +85,9 @@ const Login = () => {
             />
           </div>
           <div>
-            <label>Password</label>
+            <label required>Password</label>
             <input
+              required
               className="shadow-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black-300 p-2 border w-full rounded-md bg-gray-"
               type="password"
               placeholder="Enter your password"

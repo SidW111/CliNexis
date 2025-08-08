@@ -14,17 +14,25 @@ export const registerUser = async (req, res) => {
   console.log("hii from register");
   // Validate user input
   if (!name || !email || !password) {
-    return res.json({ message: "Missing Details" });
+    return res.status(400).json({ message: "Missing Details" });
   }
   if (!validator.isEmail(email)) {
-    return res.json({ message: "Enter a valid email" });
+    return res.status(400).json({ message: "Enter a valid email" });
   }
-  validator.isStrongPassword(password, {
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 0,
-    minNumbers: 1,
-  });
+  if (
+    !validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1, // usually better to require uppercase
+      minNumbers: 1,
+      minSymbols: 0,
+    })
+  ) {
+    return res.status(400).json({
+      message:
+        "Password must be at least 8 characters long, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.",
+    });
+  }
 
   try {
     const existingUser = await userModel.findOne({
@@ -42,7 +50,7 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
     if (newUser) {
-      res.status(211).json({ message: "user registered successfully" });
+      res.status(211).json({ success:true, message: "user registered successfully" });
     }
   } catch (error) {
     res.status(500).json({
@@ -65,7 +73,7 @@ export const loginUser = async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials." });
+      return res.status(401).json({ message: "Wrong password please try again." });
     }
 
     const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -86,6 +94,7 @@ export const loginUser = async (req, res) => {
     });
 
     res.status(200).json({
+      success:true,
       accessToken,
       user: {
         id: user._id,
@@ -221,7 +230,7 @@ export const bookAppointment = async (req, res) => {
     if (!docSlot) {
       return res
         .status(400)
-        .json({ message:"slot not available", error: "slot not available" });
+        .json({ message: "slot not available", error: "slot not available" });
     }
     const newAppointment = await appointmentModel.create(appointmentData);
 
@@ -349,7 +358,7 @@ export const paymentrazorpay = async (req, res) => {
     const options = {
       amount: appointmentData.amount * 100,
       currency: "INR",
-      
+
       receipt: appointmentId.toString(),
     };
 
@@ -357,7 +366,7 @@ export const paymentrazorpay = async (req, res) => {
 
     const order = await RazporpayInstance.orders.create(options);
 
-    console.log("razorpay options created succesfully"+ order);
+    console.log("razorpay options created succesfully" + order);
 
     res.status(200).json({
       success: true,
