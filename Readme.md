@@ -50,9 +50,3 @@ Built for real-world scheduling with JWT auth, role-based access, and a clean Ta
 - **Auth:** JSON Web Tokens (JWT)
 
 ---
-
-Backend Setup 
-
-cd backend
-cp .env.example .env
-npm install
