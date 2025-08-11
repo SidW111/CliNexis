@@ -8,7 +8,7 @@ Built for real-world scheduling with JWT auth, role-based access, and a clean Ta
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE) [![Demo](https://img.shields.io/badge/Live%20Demo-Available-blue.svg)]
 
 ## 🚀 Live Demo
-🔗 **Live Demo:** `https://your-live-demo-link.com` (replace with your deployed link)
+🔗 **Live Demo:** `https://clinexis-fe.onrender.com/` (replace with your deployed link)
 
 ## 🔗 Repo
 `https://github.com/SidW111/CliNexis`
@@ -40,17 +40,19 @@ Built for real-world scheduling with JWT auth, role-based access, and a clean Ta
 - RESTful API (Express.js)
 - MongoDB data models
 - Tailwind CSS for styling
-- Ready-to-deploy (Heroku / Vercel / Render / AWS)
 
 ---
 
 ## 🛠 Tech Stack
 - **Frontend:** React.js (Create React App / Vite), Tailwind CSS
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB (Atlas or local)
+- **Database:** MongoDB
 - **Auth:** JSON Web Tokens (JWT)
-- **Optional:** Socket.IO for real-time updates
 
 ---
 
-## 📁 Project Structure
+Backend Setup 
+
+cd backend
+cp .env.example .env
+npm install
